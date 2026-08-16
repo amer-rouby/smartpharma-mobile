@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/users"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (isEdit ? 'users.editTitle' : 'users.addTitle') | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+    <ion-item>
+      <ion-label position="stacked">{{ 'users.username' | translate }} *</ion-label>
+      <ion-input formControlName="username" type="text" [disabled]="isEdit"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">
+        {{ 'users.password' | translate }} {{ isEdit ? ('users.passwordEditHint' | translate) : '*' }}
+      </ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'users.fullName' | translate }} *</ion-label>
+      <ion-input formControlName="fullName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'users.email' | translate }}</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'users.phone' | translate }}</ion-label>
+      <ion-input formControlName="phone" type="tel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ 'users.roleLabel' | translate }}</ion-label>
+      <ion-select formControlName="role" interface="action-sheet">
+        @for (role of roles; track role) {
+          <ion-select-option [value]="role">{{ ('users.role.' + role) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-toggle formControlName="isActive">{{ 'users.active' | translate }}</ion-toggle>
+    </ion-item>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          {{ 'common.save' | translate }}
+        }
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
