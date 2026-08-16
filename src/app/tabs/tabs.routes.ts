@@ -132,6 +132,30 @@ export const routes: Routes = [
         loadComponent: () => import('../features/users/user-form/user-form.page').then((m) => m.UserFormPage),
       },
       {
+        path: 'stock-batches',
+        loadComponent: () =>
+          import('../features/stock-batches/stock-batches.page').then((m) => m.StockBatchesPage),
+      },
+      {
+        path: 'stock-batches/new',
+        loadComponent: () =>
+          import('../features/stock-batches/stock-batch-form/stock-batch-form.page').then(
+            (m) => m.StockBatchFormPage
+          ),
+      },
+      {
+        path: 'stock-batches/:id/edit',
+        loadComponent: () =>
+          import('../features/stock-batches/stock-batch-form/stock-batch-form.page').then(
+            (m) => m.StockBatchFormPage
+          ),
+      },
+      {
+        path: 'stock-movements',
+        loadComponent: () =>
+          import('../features/stock-movements/stock-movements.page').then((m) => m.StockMovementsPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

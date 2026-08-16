@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'stockMovements.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (stats(); as s) {
+    <div class="stats-row">
+      <div class="stat-chip in">
+        <span class="value">{{ s.totalStockIn }}</span>
+        <span class="label">{{ 'stockMovements.stockIn' | translate }}</span>
+      </div>
+      <div class="stat-chip out">
+        <span class="value">{{ s.totalStockOut }}</span>
+        <span class="label">{{ 'stockMovements.stockOut' | translate }}</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value">{{ s.totalAdjustments }}</span>
+        <span class="label">{{ 'stockMovements.adjustments' | translate }}</span>
+      </div>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (movements().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="swap-vertical-outline"></ion-icon>
+      <p>{{ 'stockMovements.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <div class="movement-list">
+      @for (movement of movements(); track movement.id) {
+        <div class="movement-row">
+          <div class="movement-type" [attr.data-color]="typeColor(movement.movementType)">
+            {{ ('stockMovements.type.' + movement.movementType) | translate }}
+          </div>
+          <div class="movement-info">
+            <div class="primary">{{ movement.productName }}</div>
+            <div class="secondary">{{ movement.batchNumber }} · {{ movement.movementDate | date: 'short' }}</div>
+          </div>
+          <div class="movement-qty" [class.negative]="quantityChange(movement) < 0">
+            {{ quantityChange(movement) > 0 ? '+' : '' }}{{ quantityChange(movement) }}
+          </div>
+        </div>
+      }
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+</ion-content>

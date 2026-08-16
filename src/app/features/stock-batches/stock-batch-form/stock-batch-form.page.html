@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/stock-batches"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (isEdit ? 'stockBatches.editTitle' : 'stockBatches.addTitle') | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.product' | translate }} *</ion-label>
+      @if (selectedProduct()) {
+        <ion-input [value]="selectedProduct()!.name" readonly (click)="selectedProduct.set(null)"></ion-input>
+      } @else {
+        <ion-searchbar
+          [placeholder]="'stockBatches.searchProduct' | translate"
+          [debounce]="0"
+          (ionInput)="onProductSearch($any($event.target).value)"
+        ></ion-searchbar>
+      }
+    </ion-item>
+
+    @if (productResults().length > 0) {
+      <ion-list class="product-results">
+        @for (product of productResults(); track product.id) {
+          <ion-item button (click)="pickProduct(product)">
+            <ion-label>{{ product.name }}</ion-label>
+          </ion-item>
+        }
+      </ion-list>
+    }
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.batchNumber' | translate }} *</ion-label>
+      <ion-input formControlName="batchNumber" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.quantityInitial' | translate }} *</ion-label>
+      <ion-input formControlName="quantityInitial" type="number" min="0"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.quantityCurrent' | translate }}</ion-label>
+      <ion-input formControlName="quantityCurrent" type="number" min="0"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.expiryDate' | translate }} *</ion-label>
+      <ion-input formControlName="expiryDate" type="date"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.location' | translate }}</ion-label>
+      <ion-input formControlName="location" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.shelf' | translate }}</ion-label>
+      <ion-input formControlName="shelf" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.notes' | translate }}</ion-label>
+      <ion-textarea formControlName="notes" [autoGrow]="true"></ion-textarea>
+    </ion-item>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          {{ 'common.save' | translate }}
+        }
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

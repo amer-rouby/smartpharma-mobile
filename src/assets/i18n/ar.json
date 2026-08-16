@@ -129,6 +129,8 @@
     "suppliers": "الموردين",
     "expenses": "المصروفات",
     "reports": "التقارير",
+    "stockBatches": "دفعات المخزون",
+    "stockMovements": "حركة المخزون",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
     "administration": "الإدارة",
@@ -190,6 +192,39 @@
     "paymentMethods": "طرق الدفع المفعّلة",
     "saveSuccess": "تم حفظ الإعدادات بنجاح",
     "saveFailed": "فشل حفظ الإعدادات"
+  },
+  "stockBatches": {
+    "title": "دفعات المخزون",
+    "emptyState": "مفيش دفعات",
+    "expiry": "الصلاحية",
+    "addTitle": "إضافة دفعة",
+    "editTitle": "تعديل دفعة",
+    "product": "المنتج",
+    "searchProduct": "ابحث عن منتج...",
+    "batchNumber": "رقم الدفعة",
+    "quantityInitial": "الكمية الأولية",
+    "quantityCurrent": "الكمية الحالية",
+    "expiryDate": "تاريخ الانتهاء",
+    "location": "الموقع",
+    "shelf": "الرف",
+    "notes": "ملاحظات",
+    "saveFailed": "فشل حفظ الدفعة"
+  },
+  "stockMovements": {
+    "title": "حركة المخزون",
+    "emptyState": "مفيش حركة مخزون",
+    "stockIn": "وارد",
+    "stockOut": "صادر",
+    "adjustments": "تسويات",
+    "type": {
+      "STOCK_IN": "وارد",
+      "STOCK_OUT": "صادر",
+      "STOCK_ADJUSTMENT": "تسوية",
+      "TRANSFER_IN": "تحويل وارد",
+      "TRANSFER_OUT": "تحويل صادر",
+      "EXPIRED": "منتهي",
+      "DISCARDED": "تالف"
+    }
   },
   "reports": {
     "title": "التقارير",
