@@ -7,6 +7,7 @@
     "saving": "جارٍ الحفظ...",
     "cancel": "إلغاء",
     "confirm": "تأكيد",
+    "delete": "حذف",
     "loading": "جاري التحميل..."
   },
   "login": {
@@ -124,6 +125,7 @@
     "title": "المزيد",
     "notifications": "الإشعارات",
     "purchases": "طلبات الشراء",
+    "categories": "التصنيفات",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
     "preferences": "التفضيلات",
@@ -131,6 +133,22 @@
     "theme": "المظهر",
     "lightMode": "فاتح",
     "darkMode": "داكن"
+  },
+  "categories": {
+    "title": "التصنيفات",
+    "searchPlaceholder": "ابحث عن تصنيف...",
+    "emptyState": "مفيش تصنيفات",
+    "active": "مفعّل",
+    "inactive": "معطّل",
+    "addTitle": "إضافة تصنيف",
+    "editTitle": "تعديل تصنيف",
+    "name": "الاسم",
+    "description": "الوصف",
+    "color": "اللون",
+    "saveFailed": "فشل حفظ التصنيف",
+    "deleteConfirmTitle": "حذف التصنيف",
+    "deleteConfirmMessage": "هل تريد حذف \"{{name}}\"؟",
+    "deleteFailed": "فشل حذف التصنيف"
   },
   "payment": {
     "CASH": "نقدي",

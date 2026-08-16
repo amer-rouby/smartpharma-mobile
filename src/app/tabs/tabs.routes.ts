@@ -52,6 +52,20 @@ export const routes: Routes = [
         loadComponent: () => import('../features/profile/profile.page').then((m) => m.ProfilePage),
       },
       {
+        path: 'categories',
+        loadComponent: () => import('../features/categories/categories.page').then((m) => m.CategoriesPage),
+      },
+      {
+        path: 'categories/new',
+        loadComponent: () =>
+          import('../features/categories/category-form/category-form.page').then((m) => m.CategoryFormPage),
+      },
+      {
+        path: 'categories/:id/edit',
+        loadComponent: () =>
+          import('../features/categories/category-form/category-form.page').then((m) => m.CategoryFormPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

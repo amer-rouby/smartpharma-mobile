@@ -1,0 +1,36 @@
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 24px;
+  color: var(--sp-text-faint);
+
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-weight: 500;
+  }
+}
+
+.category-list {
+  padding: 8px 12px 90px;
+
+  ion-item {
+    --border-radius: var(--sp-radius-md);
+    margin-bottom: 8px;
+    box-shadow: var(--sp-shadow-sm);
+    --border-color: transparent;
+  }
+}
+
+.category-swatch {
+  width: 14px;
+  height: 40px;
+  border-radius: 6px;
+  margin-inline-end: 14px;
+}

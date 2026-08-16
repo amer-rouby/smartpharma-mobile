@@ -7,6 +7,7 @@
     "saving": "Saving...",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "delete": "Delete",
     "loading": "Loading..."
   },
   "login": {
@@ -124,6 +125,7 @@
     "title": "More",
     "notifications": "Notifications",
     "purchases": "Purchase Orders",
+    "categories": "Categories",
     "settings": "Notification Settings",
     "account": "My Account",
     "preferences": "Preferences",
@@ -131,6 +133,22 @@
     "theme": "Theme",
     "lightMode": "Light",
     "darkMode": "Dark"
+  },
+  "categories": {
+    "title": "Categories",
+    "searchPlaceholder": "Search categories...",
+    "emptyState": "No categories",
+    "active": "Active",
+    "inactive": "Inactive",
+    "addTitle": "Add Category",
+    "editTitle": "Edit Category",
+    "name": "Name",
+    "description": "Description",
+    "color": "Color",
+    "saveFailed": "Failed to save category",
+    "deleteConfirmTitle": "Delete Category",
+    "deleteConfirmMessage": "Delete \"{{name}}\"?",
+    "deleteFailed": "Failed to delete category"
   },
   "payment": {
     "CASH": "Cash",
