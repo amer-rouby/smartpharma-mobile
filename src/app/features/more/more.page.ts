@@ -27,6 +27,7 @@ import {
   sunnyOutline,
   pricetagOutline,
   businessOutline,
+  walletOutline,
 } from 'ionicons/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, startWith, switchMap, map } from 'rxjs';
@@ -79,6 +80,7 @@ export class MorePage {
   );
 
   readonly userName = () => this.authService.getCurrentUser()?.fullName ?? '';
+  readonly canViewExpenses = this.authService.hasRole('ADMIN', 'MANAGER');
 
   constructor() {
     addIcons({
@@ -92,6 +94,7 @@ export class MorePage {
       sunnyOutline,
       pricetagOutline,
       businessOutline,
+      walletOutline,
     });
   }
 

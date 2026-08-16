@@ -80,6 +80,15 @@ export const routes: Routes = [
           import('../features/suppliers/supplier-form/supplier-form.page').then((m) => m.SupplierFormPage),
       },
       {
+        path: 'expenses',
+        loadComponent: () => import('../features/expenses/expenses.page').then((m) => m.ExpensesPage),
+      },
+      {
+        path: 'expenses/new',
+        loadComponent: () =>
+          import('../features/expenses/expense-form/expense-form.page').then((m) => m.ExpenseFormPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',
