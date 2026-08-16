@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/expenses"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'expenses.addTitle' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+    <ion-item>
+      <ion-label>{{ 'expenses.categoryLabel' | translate }}</ion-label>
+      <ion-select formControlName="category" interface="action-sheet">
+        @for (category of categories; track category) {
+          <ion-select-option [value]="category">{{ ('expenses.category.' + category) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'expenses.expenseTitle' | translate }} *</ion-label>
+      <ion-input formControlName="title" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'expenses.amount' | translate }} *</ion-label>
+      <ion-input formControlName="amount" type="number" min="0.01" step="0.01"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ 'expenses.paymentMethod' | translate }}</ion-label>
+      <ion-select formControlName="paymentMethod" interface="action-sheet">
+        @for (method of paymentMethods; track method) {
+          <ion-select-option [value]="method">{{ ('payment.' + method) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'expenses.referenceNumber' | translate }}</ion-label>
+      <ion-input formControlName="referenceNumber" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'expenses.description' | translate }}</ion-label>
+      <ion-textarea formControlName="description" [autoGrow]="true"></ion-textarea>
+    </ion-item>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          {{ 'common.save' | translate }}
+        }
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

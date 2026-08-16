@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'expenses.title' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [placeholder]="'expenses.searchPlaceholder' | translate"
+      [debounce]="0"
+      (ionInput)="onSearchChange($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (summary(); as s) {
+    <div class="summary-card">
+      <div class="summary-item">
+        <span class="value">{{ s.totalExpenses | number: '1.0-0' }}</span>
+        <span class="label">{{ 'expenses.totalExpenses' | translate }}</span>
+      </div>
+      <div class="summary-item">
+        <span class="value">{{ s.totalTransactions }}</span>
+        <span class="label">{{ 'expenses.totalTransactions' | translate }}</span>
+      </div>
+      <div class="summary-item">
+        <span class="value">{{ s.averageExpense | number: '1.0-0' }}</span>
+        <span class="label">{{ 'expenses.averageExpense' | translate }}</span>
+      </div>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (expenses().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <p>{{ 'expenses.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="expense-list">
+      @for (expense of expenses(); track expense.id) {
+        <ion-item>
+          <ion-label>
+            <h2>{{ expense.title }}</h2>
+            <p>{{ ('expenses.category.' + expense.category) | translate }} · {{ expense.expenseDate | date: 'short' }}</p>
+          </ion-label>
+          <div slot="end" class="amount-actions">
+            <span class="amount">{{ expense.amount | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
+            <ion-icon name="trash-outline" color="danger" (click)="deleteExpense(expense)"></ion-icon>
+          </div>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addExpense()" color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
