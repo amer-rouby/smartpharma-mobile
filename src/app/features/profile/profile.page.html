@@ -5,34 +5,144 @@
 </ion-header>
 
 <ion-content>
-  <div class="profile-header">
-    <ion-icon name="person-circle-outline"></ion-icon>
-    <h2>{{ user?.fullName }}</h2>
-    <p>{{ user?.username }}</p>
-  </div>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (profile(); as p) {
+    <div class="avatar-section">
+      <div class="avatar-wrapper" (click)="onChangePhoto()">
+        @if (avatarUrl) {
+          <img [src]="avatarUrl" alt="" class="avatar-img" />
+        } @else {
+          <ion-icon name="person-circle-outline" class="avatar-placeholder"></ion-icon>
+        }
+        <div class="avatar-badge">
+          @if (uploadingPhoto()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            <ion-icon name="camera-outline"></ion-icon>
+          }
+        </div>
+      </div>
+      <h2>{{ p.fullName }}</h2>
+      <p>{{ p.username }} · {{ p.role }}</p>
+    </div>
 
-  <ion-list inset="true">
-    <ion-item>
-      <ion-icon name="business-outline" slot="start"></ion-icon>
-      <ion-label>
-        <h3>{{ 'profile.pharmacy' | translate }}</h3>
-        <p>{{ user?.pharmacyName }}</p>
-      </ion-label>
-    </ion-item>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+      <h3 class="section-title">{{ 'profile.personalInfo' | translate }}</h3>
 
-    <ion-item>
-      <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
-      <ion-label>
-        <h3>{{ 'profile.role' | translate }}</h3>
-        <p>{{ user?.role }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.fullName' | translate }} *</ion-label>
+        <ion-input formControlName="fullName" type="text"></ion-input>
+      </ion-item>
 
-  <div class="logout-wrapper">
-    <ion-button expand="block" color="danger" fill="outline" (click)="onLogout()">
-      <ion-icon name="log-out-outline" slot="start"></ion-icon>
-      {{ 'profile.logout' | translate }}
-    </ion-button>
-  </div>
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.email' | translate }} *</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.phone' | translate }}</ion-label>
+        <ion-input formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{ 'profile.gender' | translate }}</ion-label>
+        <ion-select formControlName="gender" interface="action-sheet">
+          @for (gender of genders; track gender) {
+            <ion-select-option [value]="gender">{{ ('profile.genderOption.' + gender) | translate }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <h3 class="section-title">{{ 'profile.professionalInfo' | translate }}</h3>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.jobTitle' | translate }}</ion-label>
+        <ion-input formControlName="jobTitle" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.department' | translate }}</ion-label>
+        <ion-input formControlName="department" type="text"></ion-input>
+      </ion-item>
+
+      <h3 class="section-title">{{ 'profile.addressInfo' | translate }}</h3>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.address' | translate }}</ion-label>
+        <ion-input formControlName="address" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.city' | translate }}</ion-label>
+        <ion-input formControlName="city" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'profile.country' | translate }}</ion-label>
+        <ion-input formControlName="country" type="text"></ion-input>
+      </ion-item>
+
+      <h3 class="section-title">{{ 'profile.bio' | translate }}</h3>
+
+      <ion-item>
+        <ion-textarea formControlName="bio" [autoGrow]="true" [placeholder]="'profile.bioPlaceholder' | translate"></ion-textarea>
+      </ion-item>
+
+      <div class="save-wrapper">
+        <ion-button expand="block" type="submit" [disabled]="saving()">
+          @if (saving()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            {{ 'common.save' | translate }}
+          }
+        </ion-button>
+      </div>
+    </form>
+
+    <div class="password-section">
+      <ion-button expand="block" fill="outline" (click)="togglePasswordForm()">
+        <ion-icon [name]="showPasswordForm() ? 'close-outline' : 'lock-closed-outline'" slot="start"></ion-icon>
+        {{ (showPasswordForm() ? 'profile.hidePasswordForm' : 'profile.changePassword') | translate }}
+      </ion-button>
+
+      @if (showPasswordForm()) {
+        <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="form-wrapper">
+          <ion-item>
+            <ion-label position="stacked">{{ 'profile.oldPassword' | translate }} *</ion-label>
+            <ion-input formControlName="oldPassword" type="password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">{{ 'profile.newPassword' | translate }} *</ion-label>
+            <ion-input formControlName="newPassword" type="password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">{{ 'profile.confirmPassword' | translate }} *</ion-label>
+            <ion-input formControlName="confirmPassword" type="password"></ion-input>
+          </ion-item>
+
+          <div class="save-wrapper">
+            <ion-button expand="block" type="submit" [disabled]="changingPassword()">
+              @if (changingPassword()) {
+                <ion-spinner name="dots"></ion-spinner>
+              } @else {
+                {{ 'profile.changePassword' | translate }}
+              }
+            </ion-button>
+          </div>
+        </form>
+      }
+    </div>
+
+    <div class="logout-wrapper">
+      <ion-button expand="block" color="danger" fill="outline" (click)="onLogout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        {{ 'profile.logout' | translate }}
+      </ion-button>
+    </div>
+  }
 </ion-content>

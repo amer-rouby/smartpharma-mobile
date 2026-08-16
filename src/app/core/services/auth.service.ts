@@ -81,6 +81,10 @@ export class AuthService {
     return this.getCurrentUser()?.pharmacyId ?? null;
   }
 
+  getUserId(): number | null {
+    return this.getCurrentUser()?.userId ?? null;
+  }
+
   hasRole(...roles: string[]): boolean {
     const role = this.getCurrentUser()?.role;
     return !!role && roles.includes(role);
