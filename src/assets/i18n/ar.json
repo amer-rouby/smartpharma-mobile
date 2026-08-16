@@ -131,6 +131,8 @@
     "reports": "التقارير",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
+    "administration": "الإدارة",
+    "systemSettings": "إعدادات النظام",
     "preferences": "التفضيلات",
     "language": "اللغة",
     "theme": "المظهر",
@@ -152,6 +154,19 @@
     "deleteConfirmTitle": "حذف التصنيف",
     "deleteConfirmMessage": "هل تريد حذف \"{{name}}\"؟",
     "deleteFailed": "فشل حذف التصنيف"
+  },
+  "systemSettings": {
+    "title": "إعدادات النظام",
+    "pharmacyName": "اسم الصيدلية",
+    "phone": "التليفون",
+    "email": "البريد الإلكتروني",
+    "address": "العنوان",
+    "currency": "العملة",
+    "largeSaleThreshold": "حد عملية البيع الكبيرة",
+    "largeExpenseThreshold": "حد المصروف الكبير",
+    "paymentMethods": "طرق الدفع المفعّلة",
+    "saveSuccess": "تم حفظ الإعدادات بنجاح",
+    "saveFailed": "فشل حفظ الإعدادات"
   },
   "reports": {
     "title": "التقارير",

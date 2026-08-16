@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'systemSettings.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-wrapper">
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.pharmacyName' | translate }} *</ion-label>
+        <ion-input formControlName="pharmacyName" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.phone' | translate }}</ion-label>
+        <ion-input formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.email' | translate }}</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.address' | translate }}</ion-label>
+        <ion-input formControlName="address" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{ 'systemSettings.currency' | translate }}</ion-label>
+        <ion-select formControlName="currency" interface="action-sheet">
+          @for (currency of currencies; track currency) {
+            <ion-select-option [value]="currency">{{ currency }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.largeSaleThreshold' | translate }}</ion-label>
+        <ion-input formControlName="largeSaleThreshold" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'systemSettings.largeExpenseThreshold' | translate }}</ion-label>
+        <ion-input formControlName="largeExpenseThreshold" type="number"></ion-input>
+      </ion-item>
+
+      <ion-list-header class="section-header">{{ 'systemSettings.paymentMethods' | translate }}</ion-list-header>
+      @for (method of allPaymentMethods; track method) {
+        <ion-item>
+          <ion-checkbox
+            [checked]="selectedPaymentMethods().has(method)"
+            (ionChange)="togglePaymentMethod(method, $any($event.detail).checked)"
+          >
+            {{ (paymentMethodKeys[method] || method) | translate }}
+          </ion-checkbox>
+        </ion-item>
+      }
+
+      <div class="save-wrapper">
+        <ion-button expand="block" type="submit" [disabled]="saving()">
+          @if (saving()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            {{ 'common.save' | translate }}
+          }
+        </ion-button>
+      </div>
+    </form>
+  }
+</ion-content>

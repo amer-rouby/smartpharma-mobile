@@ -115,6 +115,11 @@ export const routes: Routes = [
           import('../features/reports/expiry-report/expiry-report.page').then((m) => m.ExpiryReportPage),
       },
       {
+        path: 'system-settings',
+        loadComponent: () =>
+          import('../features/system-settings/system-settings.page').then((m) => m.SystemSettingsPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',
