@@ -76,7 +76,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "port": 8100
+            "port": 8100,
+            "host": "0.0.0.0",
+            "disableHostCheck": true,
+            "allowedHosts": [".loca.lt"],
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
