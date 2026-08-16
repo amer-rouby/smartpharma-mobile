@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/reports"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'reports.financial' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (report(); as r) {
+    <div class="stats-grid">
+      <div class="stat-card highlight">
+        <div class="stat-value">{{ r.netProfit | number: '1.0-0' }}</div>
+        <div class="stat-label">{{ 'reports.netProfit' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.profitMargin | number: '1.1-1' }}%</div>
+        <div class="stat-label">{{ 'reports.profitMargin' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.totalRevenue | number: '1.0-0' }}</div>
+        <div class="stat-label">{{ 'reports.totalRevenue' | translate }}</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-value">{{ r.totalExpenses | number: '1.0-0' }}</div>
+        <div class="stat-label">{{ 'reports.totalExpenses' | translate }}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>{{ 'reports.monthlyBreakdown' | translate }}</h3>
+      <div class="report-list">
+        @for (month of r.monthlyData; track month.month) {
+          <div class="report-row">
+            <span class="primary">{{ month.month }}</span>
+            <span class="value">{{ month.profit | number: '1.0-0' }}</span>
+          </div>
+        } @empty {
+          <div class="empty-row">{{ 'reports.noData' | translate }}</div>
+        }
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>{{ 'reports.expensesByCategory' | translate }}</h3>
+      <div class="report-list">
+        @for (item of r.expensesByCategory; track item.category) {
+          <div class="report-row">
+            <span class="primary">{{ ('expenses.category.' + item.category) | translate }}</span>
+            <span class="value">{{ item.amount | number: '1.0-0' }}</span>
+          </div>
+        } @empty {
+          <div class="empty-row">{{ 'reports.noData' | translate }}</div>
+        }
+      </div>
+    </div>
+  }
+</ion-content>

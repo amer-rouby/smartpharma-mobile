@@ -89,6 +89,32 @@ export const routes: Routes = [
           import('../features/expenses/expense-form/expense-form.page').then((m) => m.ExpenseFormPage),
       },
       {
+        path: 'reports',
+        loadComponent: () => import('../features/reports/reports.page').then((m) => m.ReportsPage),
+      },
+      {
+        path: 'reports/sales',
+        loadComponent: () =>
+          import('../features/reports/sales-report/sales-report.page').then((m) => m.SalesReportPage),
+      },
+      {
+        path: 'reports/stock',
+        loadComponent: () =>
+          import('../features/reports/stock-report/stock-report.page').then((m) => m.StockReportPage),
+      },
+      {
+        path: 'reports/financial',
+        loadComponent: () =>
+          import('../features/reports/financial-report/financial-report.page').then(
+            (m) => m.FinancialReportPage
+          ),
+      },
+      {
+        path: 'reports/expiry',
+        loadComponent: () =>
+          import('../features/reports/expiry-report/expiry-report.page').then((m) => m.ExpiryReportPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

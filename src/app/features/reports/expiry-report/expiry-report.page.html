@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/reports"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'reports.expiry' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (report(); as r) {
+    <div class="stats-grid">
+      <div class="stat-card danger">
+        <div class="stat-value">{{ r.expiredCount }}</div>
+        <div class="stat-label">{{ 'reports.expiredCount' | translate }}</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-value">{{ r.urgentExpiring }}</div>
+        <div class="stat-label">{{ 'reports.urgent' | translate }}</div>
+      </div>
+      <div class="stat-card warn">
+        <div class="stat-value">{{ r.warningExpiring }}</div>
+        <div class="stat-label">{{ 'reports.warning' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.okExpiring }}</div>
+        <div class="stat-label">{{ 'reports.ok' | translate }}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>{{ 'reports.expiringProducts' | translate }}</h3>
+      <div class="report-list">
+        @for (product of r.expiringProducts; track product.productId) {
+          <div class="report-row">
+            <div>
+              <div class="primary">{{ product.productName }}</div>
+              <div class="secondary">{{ product.batchNumber }} · {{ product.expiryDate }}</div>
+            </div>
+            <span class="value">{{ product.daysUntilExpiry }} {{ 'reports.days' | translate }}</span>
+          </div>
+        } @empty {
+          <div class="empty-row">{{ 'reports.noData' | translate }}</div>
+        }
+      </div>
+    </div>
+  }
+</ion-content>

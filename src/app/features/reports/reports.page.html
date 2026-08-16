@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'reports.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="report-grid">
+    <div class="report-card" (click)="goTo('sales')">
+      <ion-icon name="cash-outline"></ion-icon>
+      <span>{{ 'reports.sales' | translate }}</span>
+    </div>
+    <div class="report-card" (click)="goTo('stock')">
+      <ion-icon name="cube-outline"></ion-icon>
+      <span>{{ 'reports.stock' | translate }}</span>
+    </div>
+    <div class="report-card" (click)="goTo('financial')">
+      <ion-icon name="trending-up-outline"></ion-icon>
+      <span>{{ 'reports.financial' | translate }}</span>
+    </div>
+    <div class="report-card" (click)="goTo('expiry')">
+      <ion-icon name="time-outline"></ion-icon>
+      <span>{{ 'reports.expiry' | translate }}</span>
+    </div>
+  </div>
+</ion-content>

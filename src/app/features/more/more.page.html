@@ -41,6 +41,14 @@
       </ion-item>
     }
 
+    @if (canViewReports) {
+      <ion-item button (click)="goTo('/tabs/reports')">
+        <div class="menu-icon" slot="start"><ion-icon name="bar-chart-outline"></ion-icon></div>
+        <ion-label>{{ 'more.reports' | translate }}</ion-label>
+        <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+      </ion-item>
+    }
+
     <ion-item button (click)="goTo('/tabs/settings')">
       <div class="menu-icon" slot="start"><ion-icon name="settings-outline"></ion-icon></div>
       <ion-label>{{ 'more.settings' | translate }}</ion-label>
