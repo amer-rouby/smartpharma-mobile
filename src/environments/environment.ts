@@ -8,7 +8,10 @@ export const environment = {
   // since both can reach the dev machine's own localhost. A physical phone on the
   // same network needs the dev machine's LAN IP instead (e.g. http://192.168.1.x:8081/api) -
   // localhost on a real device means the phone itself, not this computer.
-  apiUrl: 'http://localhost:8081/api',
+  // Relative path - the dev server proxies /api to localhost:8081 (see
+  // proxy.conf.json), so this works from any origin the app is loaded from
+  // (localhost, LAN IP, or a public tunnel URL) without CORS or firewall setup.
+  apiUrl: '/api',
   appName: 'صيدليتي الذكية',
   tokenKey: 'accessToken',
   refreshTokenKey: 'refreshToken',
