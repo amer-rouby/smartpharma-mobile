@@ -249,7 +249,26 @@
     "location": "الموقع",
     "shelf": "الرف",
     "notes": "ملاحظات",
-    "saveFailed": "فشل حفظ الدفعة"
+    "saveFailed": "فشل حفظ الدفعة",
+    "adjustTitle": "تعديل المخزون",
+    "currentQuantity": "الكمية الحالية",
+    "adjustmentType": "نوع التعديل",
+    "quantity": "الكمية",
+    "reason": "السبب",
+    "adjustType": {
+      "ADD": "إضافة",
+      "REMOVE": "خصم",
+      "CORRECTION": "تصحيح"
+    },
+    "adjustReason": {
+      "DAMAGED": "تالف",
+      "EXPIRED": "منتهي الصلاحية",
+      "RETURNED": "مرتجع",
+      "COUNT_ERROR": "خطأ في الجرد",
+      "OTHER": "أخرى"
+    },
+    "adjustSuccess": "تم تعديل المخزون بنجاح",
+    "adjustFailed": "فشل تعديل المخزون"
   },
   "payments": {
     "title": "المدفوعات والمرتجعات",

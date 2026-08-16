@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/stock-batches"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'stockBatches.adjustTitle' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (batch) {
+    <div class="batch-info">
+      <div>
+        <span>{{ 'products.name' | translate }}</span>
+        <strong>{{ batch.productName }}</strong>
+      </div>
+      <div>
+        <span>{{ 'stockBatches.batchNumber' | translate }}</span>
+        <strong>{{ batch.batchNumber }}</strong>
+      </div>
+      <div>
+        <span>{{ 'stockBatches.currentQuantity' | translate }}</span>
+        <strong>{{ batch.quantityCurrent }}</strong>
+      </div>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+    <ion-item>
+      <ion-label>{{ 'stockBatches.adjustmentType' | translate }}</ion-label>
+      <ion-select formControlName="type" interface="action-sheet">
+        @for (type of types; track type) {
+          <ion-select-option [value]="type">{{ ('stockBatches.adjustType.' + type) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.quantity' | translate }} *</ion-label>
+      <ion-input formControlName="quantity" type="number" min="1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ 'stockBatches.reason' | translate }}</ion-label>
+      <ion-select formControlName="reason" interface="action-sheet">
+        @for (reason of reasons; track reason) {
+          <ion-select-option [value]="reason">{{ ('stockBatches.adjustReason.' + reason) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'stockBatches.notes' | translate }}</ion-label>
+      <ion-textarea formControlName="notes" [autoGrow]="true"></ion-textarea>
+    </ion-item>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          {{ 'common.save' | translate }}
+        }
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -10,6 +10,7 @@ import {
   IonItem,
   IonLabel,
   IonBadge,
+  IonButton,
   IonSpinner,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
@@ -18,9 +19,10 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { addOutline, cubeOutline } from 'ionicons/icons';
+import { addOutline, cubeOutline, swapVerticalOutline } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { StockBatchService } from '../../core/services/stock-batch.service';
+import { AuthService } from '../../core/services/auth.service';
 import { StockBatch } from '../../core/models/stock-batch.model';
 
 @Component({
@@ -45,10 +47,12 @@ import { StockBatch } from '../../core/models/stock-batch.model';
     IonFab,
     IonFabButton,
     IonIcon,
+    IonButton,
   ],
 })
 export class StockBatchesPage implements OnInit {
   private readonly stockBatchService = inject(StockBatchService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   readonly batches = signal<StockBatch[]>([]);
@@ -56,9 +60,10 @@ export class StockBatchesPage implements OnInit {
   readonly page = signal(0);
   readonly hasMore = signal(true);
   readonly pageSize = 20;
+  readonly canAdjust = this.authService.hasRole('ADMIN', 'PHARMACIST');
 
   constructor() {
-    addIcons({ addOutline, cubeOutline });
+    addIcons({ addOutline, cubeOutline, swapVerticalOutline });
   }
 
   ngOnInit(): void {
@@ -102,5 +107,9 @@ export class StockBatchesPage implements OnInit {
 
   openBatch(batch: StockBatch): void {
     this.router.navigate(['/tabs/stock-batches', batch.id, 'edit'], { state: { batch } });
+  }
+
+  adjustBatch(batch: StockBatch): void {
+    this.router.navigate(['/tabs/stock-batches', batch.id, 'adjust'], { state: { batch } });
   }
 }

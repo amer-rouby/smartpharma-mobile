@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/auth.model';
-import { StockBatch, StockBatchPage, StockBatchRequest } from '../models/stock-batch.model';
+import { StockAdjustment, StockBatch, StockBatchPage, StockBatchRequest } from '../models/stock-batch.model';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -38,6 +38,14 @@ export class StockBatchService {
   delete(id: number): Observable<void> {
     return this.http
       .delete<ApiResponse<void>>(`${this.apiUrl}/batches/${id}`, { params: this.pharmacyIdParam() })
+      .pipe(map((response) => response.data));
+  }
+
+  adjustStock(batchId: number, request: StockAdjustment): Observable<StockBatch> {
+    return this.http
+      .post<ApiResponse<StockBatch>>(`${this.apiUrl}/batches/${batchId}/adjust`, request, {
+        params: this.pharmacyIdParam(),
+      })
       .pipe(map((response) => response.data));
   }
 }

@@ -249,7 +249,26 @@
     "location": "Location",
     "shelf": "Shelf",
     "notes": "Notes",
-    "saveFailed": "Failed to save batch"
+    "saveFailed": "Failed to save batch",
+    "adjustTitle": "Adjust Stock",
+    "currentQuantity": "Current Quantity",
+    "adjustmentType": "Adjustment Type",
+    "quantity": "Quantity",
+    "reason": "Reason",
+    "adjustType": {
+      "ADD": "Add",
+      "REMOVE": "Remove",
+      "CORRECTION": "Correction"
+    },
+    "adjustReason": {
+      "DAMAGED": "Damaged",
+      "EXPIRED": "Expired",
+      "RETURNED": "Returned",
+      "COUNT_ERROR": "Count Error",
+      "OTHER": "Other"
+    },
+    "adjustSuccess": "Stock adjusted successfully",
+    "adjustFailed": "Failed to adjust stock"
   },
   "payments": {
     "title": "Payments & Refunds",

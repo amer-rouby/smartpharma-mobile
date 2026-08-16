@@ -25,6 +25,11 @@
           <ion-badge slot="end" [color]="statusColor(batch)">
             {{ batch.quantityCurrent }}
           </ion-badge>
+          @if (canAdjust) {
+            <ion-button slot="end" fill="clear" size="small" (click)="$event.stopPropagation(); adjustBatch(batch)">
+              <ion-icon name="swap-vertical-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          }
         </ion-item>
       }
     </ion-list>

@@ -161,6 +161,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'stock-batches/:id/adjust',
+        loadComponent: () =>
+          import('../features/stock-batches/stock-adjustment/stock-adjustment.page').then(
+            (m) => m.StockAdjustmentPage
+          ),
+      },
+      {
         path: 'stock-movements',
         loadComponent: () =>
           import('../features/stock-movements/stock-movements.page').then((m) => m.StockMovementsPage),

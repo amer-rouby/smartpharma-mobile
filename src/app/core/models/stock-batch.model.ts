@@ -41,3 +41,10 @@ export interface StockBatchRequest {
 }
 
 export type StockBatchPage = PagedResponse<StockBatch>;
+
+export interface StockAdjustment {
+  type: 'ADD' | 'REMOVE' | 'CORRECTION';
+  quantity: number;
+  reason: 'DAMAGED' | 'EXPIRED' | 'RETURNED' | 'COUNT_ERROR' | 'OTHER';
+  notes?: string;
+}
