@@ -26,6 +26,7 @@ import {
   moonOutline,
   sunnyOutline,
   pricetagOutline,
+  businessOutline,
 } from 'ionicons/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, startWith, switchMap, map } from 'rxjs';
@@ -90,6 +91,7 @@ export class MorePage {
       moonOutline,
       sunnyOutline,
       pricetagOutline,
+      businessOutline,
     });
   }
 

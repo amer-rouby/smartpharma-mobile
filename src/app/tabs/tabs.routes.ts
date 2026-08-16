@@ -66,6 +66,20 @@ export const routes: Routes = [
           import('../features/categories/category-form/category-form.page').then((m) => m.CategoryFormPage),
       },
       {
+        path: 'suppliers',
+        loadComponent: () => import('../features/suppliers/suppliers.page').then((m) => m.SuppliersPage),
+      },
+      {
+        path: 'suppliers/new',
+        loadComponent: () =>
+          import('../features/suppliers/supplier-form/supplier-form.page').then((m) => m.SupplierFormPage),
+      },
+      {
+        path: 'suppliers/:id/edit',
+        loadComponent: () =>
+          import('../features/suppliers/supplier-form/supplier-form.page').then((m) => m.SupplierFormPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

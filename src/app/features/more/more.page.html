@@ -27,6 +27,12 @@
       <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
     </ion-item>
 
+    <ion-item button (click)="goTo('/tabs/suppliers')">
+      <div class="menu-icon" slot="start"><ion-icon name="business-outline"></ion-icon></div>
+      <ion-label>{{ 'more.suppliers' | translate }}</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
     <ion-item button (click)="goTo('/tabs/settings')">
       <div class="menu-icon" slot="start"><ion-icon name="settings-outline"></ion-icon></div>
       <ion-label>{{ 'more.settings' | translate }}</ion-label>
