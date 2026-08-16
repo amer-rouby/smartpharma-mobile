@@ -78,6 +78,31 @@
   font-size: 14px;
 }
 
+.prescription-panel {
+  margin: 0 12px 12px;
+}
+
+.prescription-attached {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-md);
+  padding: 10px 14px;
+  box-shadow: var(--sp-shadow-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--sp-text);
+
+  span {
+    flex: 1;
+  }
+
+  ion-icon:first-child {
+    font-size: 20px;
+  }
+}
+
 .checkout-panel {
   background: var(--sp-surface-raised);
   margin: 14px 12px;
