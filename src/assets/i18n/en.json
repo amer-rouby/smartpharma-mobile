@@ -132,6 +132,7 @@
     "stockBatches": "Stock Batches",
     "stockMovements": "Stock Movements",
     "demandPrediction": "Demand Prediction",
+    "payments": "Payments & Refunds",
     "settings": "Notification Settings",
     "account": "My Account",
     "administration": "Administration",
@@ -210,6 +211,17 @@
     "shelf": "Shelf",
     "notes": "Notes",
     "saveFailed": "Failed to save batch"
+  },
+  "payments": {
+    "title": "Payments & Refunds",
+    "emptyState": "No payments",
+    "refundTitle": "Refund Payment",
+    "refundAmount": "Amount",
+    "refundReason": "Reason",
+    "refundConfirm": "Confirm Refund",
+    "refundInvalidAmount": "Invalid amount",
+    "refundSuccess": "Refund completed successfully",
+    "refundFailed": "Refund failed"
   },
   "demandPrediction": {
     "title": "Demand Prediction",

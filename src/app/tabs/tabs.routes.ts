@@ -163,6 +163,10 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'payments',
+        loadComponent: () => import('../features/payments/payments.page').then((m) => m.PaymentsPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',
