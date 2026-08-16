@@ -1,3 +1,5 @@
+import { PagedResponse } from './product.model';
+
 export interface SaleItemRequest {
   productId: number;
   quantity: number;
@@ -14,6 +16,16 @@ export interface SaleRequest {
   prescriptionImageUrl?: string;
 }
 
+export interface SaleItemResponse {
+  id: number;
+  productId: number;
+  productName: string;
+  barcode?: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
 export interface SaleResponse {
   id: number;
   invoiceNumber: string;
@@ -21,8 +33,13 @@ export interface SaleResponse {
   totalAmount: number;
   discountAmount: number;
   paymentMethod: string;
+  customerPhone?: string;
+  prescriptionImageUrl?: string;
   transactionDate: string;
+  items?: SaleItemResponse[];
 }
+
+export type SalePage = PagedResponse<SaleResponse>;
 
 export const PAYMENT_METHOD_KEYS: Record<string, string> = {
   CASH: 'payment.CASH',

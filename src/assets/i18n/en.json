@@ -112,6 +112,20 @@
     "emptyState": "No stock alerts right now",
     "resolve": "Resolve"
   },
+  "sales": {
+    "title": "Sales History",
+    "searchPlaceholder": "Search by invoice number or phone...",
+    "emptyState": "No sales found",
+    "detailTitle": "Invoice Details",
+    "invoiceNumber": "Invoice Number",
+    "date": "Date",
+    "paymentMethod": "Payment Method",
+    "customerPhone": "Customer Phone",
+    "prescriptionAttached": "Prescription attached",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total"
+  },
   "purchases": {
     "title": "Purchase Orders",
     "emptyState": "No purchase orders",
@@ -163,6 +177,7 @@
   "more": {
     "title": "More",
     "notifications": "Notifications",
+    "sales": "Sales History",
     "purchases": "Purchase Orders",
     "categories": "Categories",
     "suppliers": "Suppliers",

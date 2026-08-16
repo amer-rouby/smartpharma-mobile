@@ -43,6 +43,15 @@ export const routes: Routes = [
           import('../features/notifications/notifications.page').then((m) => m.NotificationsPage),
       },
       {
+        path: 'sales',
+        loadComponent: () => import('../features/sales/sales-history.page').then((m) => m.SalesHistoryPage),
+      },
+      {
+        path: 'sales/:id',
+        loadComponent: () =>
+          import('../features/sales/sale-detail/sale-detail.page').then((m) => m.SaleDetailPage),
+      },
+      {
         path: 'purchases',
         loadComponent: () => import('../features/purchases/purchases.page').then((m) => m.PurchasesPage),
       },

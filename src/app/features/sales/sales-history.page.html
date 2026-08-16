@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'sales.title' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [placeholder]="'sales.searchPlaceholder' | translate"
+      [debounce]="0"
+      (ionInput)="onSearchChange($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (sales().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <p>{{ 'sales.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="sale-list">
+      @for (sale of sales(); track sale.id) {
+        <ion-item button (click)="openSale(sale)" detail="true">
+          <ion-label>
+            <h2>{{ sale.invoiceNumber }}</h2>
+            <p>{{ sale.transactionDate | date: 'short' }} · {{ ('payment.' + sale.paymentMethod) | translate }}</p>
+          </ion-label>
+          <ion-badge slot="end" color="primary">
+            {{ sale.totalAmount | number: '1.0-2' }} {{ 'common.currency' | translate }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+</ion-content>

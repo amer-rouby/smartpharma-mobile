@@ -112,6 +112,20 @@
     "emptyState": "مفيش تنبيهات مخزون حاليًا",
     "resolve": "تم الحل"
   },
+  "sales": {
+    "title": "سجل المبيعات",
+    "searchPlaceholder": "ابحث برقم الفاتورة أو رقم الهاتف...",
+    "emptyState": "مفيش عمليات بيع",
+    "detailTitle": "تفاصيل الفاتورة",
+    "invoiceNumber": "رقم الفاتورة",
+    "date": "التاريخ",
+    "paymentMethod": "طريقة الدفع",
+    "customerPhone": "رقم العميل",
+    "prescriptionAttached": "روشتة مرفقة",
+    "subtotal": "الإجمالي الفرعي",
+    "discount": "الخصم",
+    "total": "الإجمالي"
+  },
   "purchases": {
     "title": "طلبات الشراء",
     "emptyState": "مفيش طلبات شراء",
@@ -163,6 +177,7 @@
   "more": {
     "title": "المزيد",
     "notifications": "الإشعارات",
+    "sales": "سجل المبيعات",
     "purchases": "طلبات الشراء",
     "categories": "التصنيفات",
     "suppliers": "الموردين",

@@ -1,0 +1,73 @@
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.invoice-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  margin: 12px 16px;
+  border-radius: var(--sp-radius-md);
+  background: var(--ion-color-light);
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    color: var(--ion-color-medium);
+  }
+}
+
+.prescription-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ion-color-success);
+  justify-content: flex-start !important;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.items-list {
+  padding: 0 12px;
+
+  ion-item {
+    --border-radius: var(--sp-radius-md);
+    margin-bottom: 8px;
+    box-shadow: var(--sp-shadow-sm);
+    --border-color: transparent;
+  }
+}
+
+.item-total {
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.totals {
+  padding: 8px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .grand-total {
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-top: 1px solid var(--ion-color-light-shade);
+    padding-top: 8px;
+    margin-top: 4px;
+  }
+}

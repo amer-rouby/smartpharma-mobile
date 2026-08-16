@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/sales"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ sale()?.invoiceNumber || ('sales.detailTitle' | translate) }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (sale(); as s) {
+    <div class="invoice-header">
+      <div>
+        <span>{{ 'sales.invoiceNumber' | translate }}</span>
+        <strong>{{ s.invoiceNumber }}</strong>
+      </div>
+      <div>
+        <span>{{ 'sales.date' | translate }}</span>
+        <strong>{{ s.transactionDate | date: 'medium' }}</strong>
+      </div>
+      <div>
+        <span>{{ 'sales.paymentMethod' | translate }}</span>
+        <strong>{{ ('payment.' + s.paymentMethod) | translate }}</strong>
+      </div>
+      @if (s.customerPhone) {
+        <div>
+          <span>{{ 'sales.customerPhone' | translate }}</span>
+          <strong>{{ s.customerPhone }}</strong>
+        </div>
+      }
+      @if (s.prescriptionImageUrl) {
+        <div class="prescription-note">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <span>{{ 'sales.prescriptionAttached' | translate }}</span>
+        </div>
+      }
+    </div>
+
+    <ion-list class="items-list">
+      @for (item of s.items; track item.id) {
+        <ion-item>
+          <ion-label>
+            <h2>{{ item.productName }}</h2>
+            <p>{{ item.quantity }} × {{ item.unitPrice | number: '1.0-2' }} {{ 'common.currency' | translate }}</p>
+          </ion-label>
+          <div slot="end" class="item-total">
+            {{ item.totalPrice | number: '1.0-2' }} {{ 'common.currency' | translate }}
+          </div>
+        </ion-item>
+      }
+    </ion-list>
+
+    <div class="totals">
+      <div>
+        <span>{{ 'sales.subtotal' | translate }}</span>
+        <span>{{ s.subtotal | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
+      </div>
+      @if (s.discountAmount) {
+        <div>
+          <span>{{ 'sales.discount' | translate }}</span>
+          <span>-{{ s.discountAmount | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
+        </div>
+      }
+      <div class="grand-total">
+        <span>{{ 'sales.total' | translate }}</span>
+        <span>{{ s.totalAmount | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
+      </div>
+    </div>
+  }
+</ion-content>
