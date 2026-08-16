@@ -126,6 +126,7 @@
     "notifications": "الإشعارات",
     "purchases": "طلبات الشراء",
     "categories": "التصنيفات",
+    "suppliers": "الموردين",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
     "preferences": "التفضيلات",
@@ -149,6 +150,27 @@
     "deleteConfirmTitle": "حذف التصنيف",
     "deleteConfirmMessage": "هل تريد حذف \"{{name}}\"؟",
     "deleteFailed": "فشل حذف التصنيف"
+  },
+  "suppliers": {
+    "title": "الموردين",
+    "searchPlaceholder": "ابحث عن مورد...",
+    "emptyState": "مفيش موردين",
+    "addTitle": "إضافة مورد",
+    "editTitle": "تعديل مورد",
+    "name": "اسم المورد",
+    "contactPerson": "الشخص المسؤول",
+    "phone": "التليفون",
+    "email": "البريد الإلكتروني",
+    "city": "المدينة",
+    "address": "العنوان",
+    "notes": "ملاحظات",
+    "saveFailed": "فشل حفظ المورد",
+    "status": {
+      "label": "الحالة",
+      "ACTIVE": "نشط",
+      "INACTIVE": "غير نشط",
+      "BLOCKED": "محظور"
+    }
   },
   "payment": {
     "CASH": "نقدي",

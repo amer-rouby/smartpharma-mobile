@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'suppliers.title' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [placeholder]="'suppliers.searchPlaceholder' | translate"
+      [debounce]="0"
+      (ionInput)="onSearchChange($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (suppliers().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="business-outline"></ion-icon>
+      <p>{{ 'suppliers.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="supplier-list">
+      @for (supplier of suppliers(); track supplier.id) {
+        <ion-item button (click)="openSupplier(supplier)" detail="true">
+          <div class="supplier-icon" slot="start">
+            <ion-icon name="business-outline"></ion-icon>
+          </div>
+          <ion-label>
+            <h2>{{ supplier.name }}</h2>
+            @if (supplier.contactPerson) {
+              <p>{{ supplier.contactPerson }}</p>
+            }
+            @if (supplier.phone) {
+              <p>{{ supplier.phone }}</p>
+            }
+          </ion-label>
+          <ion-badge slot="end" [color]="statusColors[supplier.status]">
+            {{ ('suppliers.status.' + supplier.status) | translate }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+
+  @if (canManage) {
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addSupplier()" color="primary">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  }
+</ion-content>

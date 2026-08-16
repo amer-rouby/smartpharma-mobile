@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/suppliers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (isEdit ? 'suppliers.editTitle' : 'suppliers.addTitle') | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.name' | translate }} *</ion-label>
+      <ion-input formControlName="name" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.contactPerson' | translate }}</ion-label>
+      <ion-input formControlName="contactPerson" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.phone' | translate }}</ion-label>
+      <ion-input formControlName="phone" type="tel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.email' | translate }}</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.city' | translate }}</ion-label>
+      <ion-input formControlName="city" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.address' | translate }}</ion-label>
+      <ion-textarea formControlName="address" [autoGrow]="true"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>{{ 'suppliers.status.label' | translate }}</ion-label>
+      <ion-select formControlName="status" interface="action-sheet">
+        @for (status of statuses; track status) {
+          <ion-select-option [value]="status">{{ ('suppliers.status.' + status) | translate }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'suppliers.notes' | translate }}</ion-label>
+      <ion-textarea formControlName="notes" [autoGrow]="true"></ion-textarea>
+    </ion-item>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" type="submit" [disabled]="saving()">
+        @if (saving()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          {{ 'common.save' | translate }}
+        }
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -126,6 +126,7 @@
     "notifications": "Notifications",
     "purchases": "Purchase Orders",
     "categories": "Categories",
+    "suppliers": "Suppliers",
     "settings": "Notification Settings",
     "account": "My Account",
     "preferences": "Preferences",
@@ -149,6 +150,27 @@
     "deleteConfirmTitle": "Delete Category",
     "deleteConfirmMessage": "Delete \"{{name}}\"?",
     "deleteFailed": "Failed to delete category"
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "searchPlaceholder": "Search suppliers...",
+    "emptyState": "No suppliers",
+    "addTitle": "Add Supplier",
+    "editTitle": "Edit Supplier",
+    "name": "Supplier Name",
+    "contactPerson": "Contact Person",
+    "phone": "Phone",
+    "email": "Email",
+    "city": "City",
+    "address": "Address",
+    "notes": "Notes",
+    "saveFailed": "Failed to save supplier",
+    "status": {
+      "label": "Status",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "BLOCKED": "Blocked"
+    }
   },
   "payment": {
     "CASH": "Cash",
