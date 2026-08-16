@@ -24,14 +24,12 @@
       <p>مفيش إشعارات جديدة</p>
     </div>
   } @else {
-    <ion-list>
+    <ion-list class="notif-list">
       @for (notification of notifications(); track notification.id) {
         <ion-item button (click)="markAsRead(notification)">
-          <ion-icon
-            slot="start"
-            [name]="iconFor(notification.type)"
-            [color]="priorityColor(notification.priority)"
-          ></ion-icon>
+          <div class="notif-icon" slot="start">
+            <ion-icon [name]="iconFor(notification.type)" [color]="priorityColor(notification.priority)"></ion-icon>
+          </div>
           <ion-label class="ion-text-wrap">
             <h2>{{ notification.title }}</h2>
             <p>{{ notification.message }}</p>

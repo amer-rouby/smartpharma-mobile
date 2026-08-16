@@ -1,2 +1,139 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// SmartPharma design system
+// Premium indigo + warm gold palette, generated with Ionic's color contrast rules.
+// https://ionicframework.com/docs/theming/color-generator
+
+:root {
+  /* ---------- Primary: deep indigo ---------- */
+  --ion-color-primary: #4f46e5;
+  --ion-color-primary-rgb: 79, 70, 229;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #4038ca;
+  --ion-color-primary-tint: #6259e8;
+
+  /* ---------- Secondary: warm gold accent ---------- */
+  --ion-color-secondary: #d4930c;
+  --ion-color-secondary-rgb: 212, 147, 12;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #bb810b;
+  --ion-color-secondary-tint: #d89e24;
+
+  /* ---------- Tertiary: soft violet (used sparingly) ---------- */
+  --ion-color-tertiary: #7c3aed;
+  --ion-color-tertiary-rgb: 124, 58, 237;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #6d33d0;
+  --ion-color-tertiary-tint: #894eef;
+
+  --ion-color-success: #16a34a;
+  --ion-color-success-rgb: 22, 163, 74;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #139040;
+  --ion-color-success-tint: #2dad5c;
+
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #1e1300;
+  --ion-color-warning-contrast-rgb: 30, 19, 0;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a824;
+
+  --ion-color-danger: #dc2626;
+  --ion-color-danger-rgb: 220, 38, 38;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #c22121;
+  --ion-color-danger-tint: #e13c3c;
+
+  --ion-color-dark: #1e1b4b;
+  --ion-color-dark-rgb: 30, 27, 75;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1a1842;
+  --ion-color-dark-tint: #34315d;
+
+  --ion-color-medium: #64748b;
+  --ion-color-medium-rgb: 100, 116, 139;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #58677a;
+  --ion-color-medium-tint: #748296;
+
+  --ion-color-light: #f8fafc;
+  --ion-color-light-rgb: 248, 250, 252;
+  --ion-color-light-contrast: #1e1b4b;
+  --ion-color-light-contrast-rgb: 30, 27, 75;
+  --ion-color-light-shade: #dadce0;
+  --ion-color-light-tint: #f9fbfc;
+
+  /* ---------- Base surfaces & typography ---------- */
+  --ion-font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ion-background-color: #f4f5fb;
+  --ion-text-color: #1e1b3a;
+  --ion-toolbar-background: transparent;
+
+  /* ---------- Custom design tokens ---------- */
+  --sp-surface: #ffffff;
+  --sp-surface-raised: #ffffff;
+  --sp-text: #1e1b3a;
+  --sp-text-muted: #6b7290;
+  --sp-text-faint: #9a9fbd;
+  --sp-border: #edeefb;
+  --sp-page-bg: #f4f5fb;
+
+  --sp-gradient-primary: linear-gradient(135deg, #4f46e5 0%, #4338ca 55%, #3730a3 100%);
+  --sp-gradient-gold: linear-gradient(135deg, #f6c453 0%, #d4930c 100%);
+
+  --sp-radius-sm: 10px;
+  --sp-radius-md: 16px;
+  --sp-radius-lg: 20px;
+  --sp-radius-pill: 999px;
+
+  --sp-shadow-sm: 0 2px 8px rgba(30, 27, 75, 0.06);
+  --sp-shadow-md: 0 8px 24px rgba(30, 27, 75, 0.09);
+  --sp-shadow-lg: 0 16px 40px rgba(30, 27, 75, 0.14);
+  --sp-shadow-primary: 0 10px 24px rgba(79, 70, 229, 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-color-primary: #6d64f0;
+    --ion-color-primary-rgb: 109, 100, 240;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #4f46e5;
+    --ion-color-primary-tint: #857df2;
+
+    --ion-color-secondary: #eab13c;
+    --ion-color-secondary-rgb: 234, 177, 60;
+    --ion-color-secondary-shade: #cf9b34;
+    --ion-color-secondary-tint: #edbb52;
+
+    --ion-background-color: #0f0e21;
+    --ion-text-color: #eef0fb;
+
+    --sp-surface: #191833;
+    --sp-surface-raised: #201f3e;
+    --sp-text: #eef0fb;
+    --sp-text-muted: #a8acd1;
+    --sp-text-faint: #7a7fa8;
+    --sp-border: #2c2b52;
+    --sp-page-bg: #0f0e21;
+
+    --sp-gradient-primary: linear-gradient(135deg, #6d64f0 0%, #4f46e5 55%, #3730a3 100%);
+    --sp-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+    --sp-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.4);
+    --sp-shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.5);
+    --sp-shadow-primary: 0 10px 26px rgba(109, 100, 240, 0.4);
+  }
+
+  .ion-palette-dark,
+  body {
+    --ion-item-background: var(--sp-surface);
+    --ion-toolbar-background: var(--sp-surface);
+    --ion-card-background: var(--sp-surface);
+  }
+}

@@ -1,12 +1,5 @@
 /*
  * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
 /* Core CSS required for Ionic components to work properly */
@@ -35,3 +28,205 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* =========================================================================
+ * SmartPharma premium theme
+ * Global component-level overrides so every screen inherits the same
+ * elevated, luxury look without repeating the same rules per page.
+ * ========================================================================= */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+ion-content {
+  --background: var(--sp-page-bg);
+  --color: var(--sp-text);
+}
+
+/* ---------- Headers / toolbars ---------- */
+ion-header ion-toolbar[color="primary"] {
+  --background: var(--sp-gradient-primary);
+  --color: #ffffff;
+  --border-color: transparent;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.18);
+}
+
+ion-header ion-toolbar[color="primary"] ion-title {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+ion-header ion-toolbar {
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+}
+
+ion-header ion-toolbar:not([color="primary"]) {
+  --background: var(--sp-page-bg);
+}
+
+ion-back-button {
+  --color: #ffffff;
+}
+
+ion-footer ion-toolbar {
+  --background: var(--sp-surface);
+  --border-color: transparent;
+  box-shadow: 0 -6px 20px rgba(30, 27, 75, 0.08);
+  padding-top: 4px;
+  padding-bottom: env(safe-area-inset-bottom, 4px);
+}
+
+/* ---------- Lists & items ---------- */
+ion-list {
+  background: transparent;
+  --ion-item-background: var(--sp-surface);
+}
+
+ion-list-header {
+  font-weight: 800;
+  color: var(--sp-text);
+}
+
+ion-list.list-inset,
+ion-list[inset="true"] {
+  margin-inline: 16px;
+  margin-block: 12px;
+  border-radius: var(--sp-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sp-shadow-sm);
+}
+
+ion-item {
+  --background: var(--sp-surface);
+  --border-color: var(--sp-border);
+  --color: var(--sp-text);
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --min-height: 56px;
+  font-family: var(--ion-font-family);
+}
+
+ion-item h2,
+ion-item h3 {
+  color: var(--sp-text);
+  font-weight: 700;
+}
+
+ion-item p {
+  color: var(--sp-text-muted);
+}
+
+ion-item.item-has-focus,
+ion-item.ion-activated {
+  --background: color-mix(in srgb, var(--ion-color-primary) 6%, var(--sp-surface));
+}
+
+/* ---------- Buttons ---------- */
+ion-button {
+  --border-radius: var(--sp-radius-sm);
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  text-transform: none;
+}
+
+ion-button[expand="block"] {
+  --box-shadow: var(--sp-shadow-primary);
+  height: 50px;
+}
+
+ion-button[fill="solid"]:not([color]) {
+  --background: var(--sp-gradient-primary);
+}
+
+ion-fab-button {
+  --box-shadow: var(--sp-shadow-lg);
+}
+
+/* ---------- Badges ---------- */
+ion-badge {
+  border-radius: var(--sp-radius-pill);
+  padding: 5px 11px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ---------- Searchbar ---------- */
+ion-searchbar {
+  --background: var(--sp-surface);
+  --border-radius: var(--sp-radius-pill);
+  --box-shadow: var(--sp-shadow-sm);
+  --placeholder-color: var(--sp-text-faint);
+  --icon-color: var(--sp-text-faint);
+  --color: var(--sp-text);
+  padding-inline: 12px;
+  padding-block: 6px;
+}
+
+/* ---------- Select / toggle / input ---------- */
+ion-toggle {
+  --track-background-checked: var(--ion-color-primary);
+}
+
+ion-select {
+  --placeholder-color: var(--sp-text-faint);
+  font-weight: 600;
+}
+
+/* ---------- Spinner ---------- */
+ion-spinner {
+  color: var(--ion-color-primary);
+  transform: scale(1.4);
+}
+
+/* ---------- Refresher ---------- */
+ion-refresher-content {
+  --color: var(--ion-color-primary);
+}
+
+/* ---------- Tab bar: floating premium pill ---------- */
+ion-tab-bar {
+  --background: var(--sp-surface);
+  border: none;
+  box-shadow: 0 -8px 28px rgba(30, 27, 75, 0.12);
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+ion-tab-button {
+  --color: var(--sp-text-faint);
+  --color-selected: var(--ion-color-primary);
+  font-weight: 700;
+}
+
+ion-tab-button ion-icon {
+  font-size: 22px;
+  transition: transform 0.2s ease;
+}
+
+ion-tab-button.tab-selected ion-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+ion-tab-button ion-label {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+ion-tab-button ion-badge {
+  top: 6px;
+}
+
+/* ---------- Shared utility classes for page-level premium cards ---------- */
+.sp-card {
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-lg);
+  box-shadow: var(--sp-shadow-sm);
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

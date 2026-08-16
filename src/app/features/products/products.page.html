@@ -22,15 +22,16 @@
       <p>مفيش منتجات تطابق البحث</p>
     </div>
   } @else {
-    <ion-list>
+    <ion-list class="product-list">
       @for (product of products(); track product.id) {
         <ion-item>
+          <div class="product-avatar" slot="start">{{ product.name.charAt(0) }}</div>
           <ion-label>
             <h2>{{ product.name }}</h2>
             @if (product.scientificName) {
               <p>{{ product.scientificName }}</p>
             }
-            <p>{{ product.sellPrice | number: '1.0-2' }} ج.م</p>
+            <p class="price">{{ product.sellPrice | number: '1.0-2' }} ج.م</p>
           </ion-label>
           <ion-badge slot="end" [color]="stockColor(product)">
             {{ product.totalStock }}
