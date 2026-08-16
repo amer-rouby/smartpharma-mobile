@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'stockBatches.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (batches().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="cube-outline"></ion-icon>
+      <p>{{ 'stockBatches.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="batch-list">
+      @for (batch of batches(); track batch.id) {
+        <ion-item button (click)="openBatch(batch)" detail="true">
+          <ion-label>
+            <h2>{{ batch.productName }}</h2>
+            <p>{{ batch.batchNumber }} · {{ 'stockBatches.expiry' | translate }} {{ batch.expiryDate }}</p>
+          </ion-label>
+          <ion-badge slot="end" [color]="statusColor(batch)">
+            {{ batch.quantityCurrent }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addBatch()" color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

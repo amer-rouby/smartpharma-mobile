@@ -129,6 +129,8 @@
     "suppliers": "Suppliers",
     "expenses": "Expenses",
     "reports": "Reports",
+    "stockBatches": "Stock Batches",
+    "stockMovements": "Stock Movements",
     "settings": "Notification Settings",
     "account": "My Account",
     "administration": "Administration",
@@ -190,6 +192,39 @@
     "paymentMethods": "Enabled Payment Methods",
     "saveSuccess": "Settings saved successfully",
     "saveFailed": "Failed to save settings"
+  },
+  "stockBatches": {
+    "title": "Stock Batches",
+    "emptyState": "No batches",
+    "expiry": "Expires",
+    "addTitle": "Add Batch",
+    "editTitle": "Edit Batch",
+    "product": "Product",
+    "searchProduct": "Search for a product...",
+    "batchNumber": "Batch Number",
+    "quantityInitial": "Initial Quantity",
+    "quantityCurrent": "Current Quantity",
+    "expiryDate": "Expiry Date",
+    "location": "Location",
+    "shelf": "Shelf",
+    "notes": "Notes",
+    "saveFailed": "Failed to save batch"
+  },
+  "stockMovements": {
+    "title": "Stock Movements",
+    "emptyState": "No stock movements",
+    "stockIn": "Stock In",
+    "stockOut": "Stock Out",
+    "adjustments": "Adjustments",
+    "type": {
+      "STOCK_IN": "Stock In",
+      "STOCK_OUT": "Stock Out",
+      "STOCK_ADJUSTMENT": "Adjustment",
+      "TRANSFER_IN": "Transfer In",
+      "TRANSFER_OUT": "Transfer Out",
+      "EXPIRED": "Expired",
+      "DISCARDED": "Discarded"
+    }
   },
   "reports": {
     "title": "Reports",

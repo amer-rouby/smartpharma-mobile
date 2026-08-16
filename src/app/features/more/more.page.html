@@ -33,6 +33,18 @@
       <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
     </ion-item>
 
+    <ion-item button (click)="goTo('/tabs/stock-batches')">
+      <div class="menu-icon" slot="start"><ion-icon name="layers-outline"></ion-icon></div>
+      <ion-label>{{ 'more.stockBatches' | translate }}</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
+    <ion-item button (click)="goTo('/tabs/stock-movements')">
+      <div class="menu-icon" slot="start"><ion-icon name="swap-vertical-outline"></ion-icon></div>
+      <ion-label>{{ 'more.stockMovements' | translate }}</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
     @if (canViewExpenses) {
       <ion-item button (click)="goTo('/tabs/expenses')">
         <div class="menu-icon" slot="start"><ion-icon name="wallet-outline"></ion-icon></div>
