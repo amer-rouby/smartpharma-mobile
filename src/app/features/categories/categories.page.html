@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'categories.title' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [placeholder]="'categories.searchPlaceholder' | translate"
+      [debounce]="0"
+      (ionInput)="onSearchChange($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (categories().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="pricetag-outline"></ion-icon>
+      <p>{{ 'categories.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="category-list">
+      @for (category of categories(); track category.id) {
+        <ion-item>
+          <div class="category-swatch" slot="start" [style.background]="category.color || '#667eea'"></div>
+          <ion-label>
+            <h2>{{ category.name }}</h2>
+            @if (category.description) {
+              <p>{{ category.description }}</p>
+            }
+          </ion-label>
+          <ion-badge slot="end" [color]="category.isActive ? 'success' : 'medium'">
+            {{ (category.isActive ? 'categories.active' : 'categories.inactive') | translate }}
+          </ion-badge>
+          @if (canManage) {
+            <ion-button slot="end" fill="clear" size="small" (click)="editCategory(category)">
+              <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          }
+          @if (canDelete) {
+            <ion-button slot="end" fill="clear" size="small" color="danger" (click)="deleteCategory(category)">
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          }
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+
+  @if (canManage) {
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addCategory()" color="primary">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  }
+</ion-content>
