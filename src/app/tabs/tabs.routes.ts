@@ -193,6 +193,13 @@ export const routes: Routes = [
         loadComponent: () => import('../features/payments/payments.page').then((m) => m.PaymentsPage),
       },
       {
+        path: 'payments/:reference',
+        loadComponent: () =>
+          import('../features/payments/payment-detail/payment-detail.page').then(
+            (m) => m.PaymentDetailPage
+          ),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

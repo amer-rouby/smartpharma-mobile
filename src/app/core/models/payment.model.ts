@@ -13,3 +13,9 @@ export interface Payment {
 }
 
 export type PaymentPage = PagedResponse<Payment>;
+
+export interface PaymentStats {
+  completedPayments: number;
+  pendingPayments: number;
+  totalAmount: number;
+}

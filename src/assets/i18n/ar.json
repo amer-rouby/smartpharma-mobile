@@ -326,7 +326,19 @@
     "refundConfirm": "تأكيد الاسترجاع",
     "refundInvalidAmount": "المبلغ غير صحيح",
     "refundSuccess": "تم الاسترجاع بنجاح",
-    "refundFailed": "فشل الاسترجاع"
+    "refundFailed": "فشل الاسترجاع",
+    "stats": {
+      "completed": "مكتملة",
+      "pending": "معلّقة",
+      "totalAmount": "إجمالي المبالغ"
+    },
+    "receiptTitle": "إيصال الدفع",
+    "receiptNotFound": "مفيش إيصال بهذا الرقم",
+    "reference": "الرقم المرجعي",
+    "method": "طريقة الدفع",
+    "createdAt": "تاريخ الإنشاء",
+    "paidAt": "تاريخ الدفع",
+    "transactionId": "رقم العملية"
   },
   "demandPrediction": {
     "title": "توقع الطلب",

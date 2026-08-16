@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/payments"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'payments.receiptTitle' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (payment(); as p) {
+    <div class="receipt-icon">
+      <ion-icon name="receipt-outline"></ion-icon>
+    </div>
+
+    <div class="amount-block">
+      <span class="amount">{{ p.amount | number: '1.0-2' }}</span>
+      <span class="currency">{{ 'common.currency' | translate }}</span>
+    </div>
+
+    <div class="status-chip" [attr.data-color]="statusColor(p.status)">
+      {{ p.status }}
+    </div>
+
+    <div class="receipt-card">
+      <div class="row">
+        <span>{{ 'payments.reference' | translate }}</span>
+        <strong>{{ p.referenceNumber }}</strong>
+      </div>
+      <div class="row">
+        <span>{{ 'payments.method' | translate }}</span>
+        <strong>{{ ('payment.' + p.paymentMethod) | translate }}</strong>
+      </div>
+      <div class="row">
+        <span>{{ 'payments.createdAt' | translate }}</span>
+        <strong>{{ p.createdAt | date: 'medium' }}</strong>
+      </div>
+      @if (p.paidAt) {
+        <div class="row">
+          <span>{{ 'payments.paidAt' | translate }}</span>
+          <strong>{{ p.paidAt | date: 'medium' }}</strong>
+        </div>
+      }
+      @if (p.transactionId) {
+        <div class="row">
+          <span>{{ 'payments.transactionId' | translate }}</span>
+          <strong>{{ p.transactionId }}</strong>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loading-state">
+      <p>{{ 'payments.receiptNotFound' | translate }}</p>
+    </div>
+  }
+</ion-content>

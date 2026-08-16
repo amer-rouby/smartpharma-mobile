@@ -5,6 +5,23 @@
 </ion-header>
 
 <ion-content>
+  @if (stats(); as s) {
+    <div class="stats-row">
+      <div class="stat-chip in">
+        <span class="value">{{ s.completedPayments }}</span>
+        <span class="label">{{ 'payments.stats.completed' | translate }}</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value">{{ s.pendingPayments }}</span>
+        <span class="label">{{ 'payments.stats.pending' | translate }}</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value">{{ s.totalAmount | number: '1.0-0' }}</span>
+        <span class="label">{{ 'payments.stats.totalAmount' | translate }}</span>
+      </div>
+    </div>
+  }
+
   @if (loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
@@ -17,7 +34,7 @@
   } @else {
     <ion-list class="payment-list">
       @for (payment of payments(); track payment.paymentId) {
-        <ion-item>
+        <ion-item button (click)="openReceipt(payment)">
           <ion-label>
             <h2>{{ payment.referenceNumber }}</h2>
             <p>{{ ('payment.' + payment.paymentMethod) | translate }} · {{ payment.createdAt | date: 'short' }}</p>
@@ -27,7 +44,7 @@
             <ion-badge [color]="statusColor(payment.status)">{{ payment.status }}</ion-badge>
           </div>
           @if (canRefund && payment.status === 'COMPLETED') {
-            <ion-button slot="end" fill="clear" size="small" (click)="refund(payment)">
+            <ion-button slot="end" fill="clear" size="small" (click)="$event.stopPropagation(); refund(payment)">
               <ion-icon name="arrow-undo-outline" slot="icon-only"></ion-icon>
             </ion-button>
           }

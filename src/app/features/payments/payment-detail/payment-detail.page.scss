@@ -1,0 +1,94 @@
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: var(--sp-text-faint);
+}
+
+.receipt-icon {
+  display: flex;
+  justify-content: center;
+  padding-top: 28px;
+
+  ion-icon {
+    font-size: 56px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.amount-block {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0 4px;
+
+  .amount {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--sp-text);
+  }
+
+  .currency {
+    font-size: 15px;
+    color: var(--sp-text-muted);
+  }
+}
+
+.status-chip {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 20px;
+  padding: 4px 14px;
+  border-radius: var(--sp-radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+
+  &[data-color='success'] {
+    background: color-mix(in srgb, var(--ion-color-success) 15%, transparent);
+    color: var(--ion-color-success);
+  }
+
+  &[data-color='warning'] {
+    background: color-mix(in srgb, var(--ion-color-warning) 15%, transparent);
+    color: var(--ion-color-warning);
+  }
+
+  &[data-color='danger'] {
+    background: color-mix(in srgb, var(--ion-color-danger) 12%, transparent);
+    color: var(--ion-color-danger);
+  }
+
+  &[data-color='medium'] {
+    background: color-mix(in srgb, var(--ion-color-medium) 12%, transparent);
+    color: var(--ion-color-medium);
+  }
+}
+
+.receipt-card {
+  margin: 0 16px 24px;
+  padding: 16px;
+  border-radius: var(--sp-radius-md);
+  background: var(--sp-surface-raised);
+  box-shadow: var(--sp-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+
+    span {
+      color: var(--sp-text-muted);
+    }
+
+    strong {
+      color: var(--sp-text);
+      text-align: end;
+    }
+  }
+}

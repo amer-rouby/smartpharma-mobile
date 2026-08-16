@@ -326,7 +326,19 @@
     "refundConfirm": "Confirm Refund",
     "refundInvalidAmount": "Invalid amount",
     "refundSuccess": "Refund completed successfully",
-    "refundFailed": "Refund failed"
+    "refundFailed": "Refund failed",
+    "stats": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "totalAmount": "Total Amount"
+    },
+    "receiptTitle": "Payment Receipt",
+    "receiptNotFound": "No receipt found for this reference",
+    "reference": "Reference Number",
+    "method": "Payment Method",
+    "createdAt": "Created At",
+    "paidAt": "Paid At",
+    "transactionId": "Transaction ID"
   },
   "demandPrediction": {
     "title": "Demand Prediction",

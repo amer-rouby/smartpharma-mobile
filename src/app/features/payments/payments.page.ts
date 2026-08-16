@@ -1,5 +1,6 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -22,7 +23,7 @@ import { cardOutline, arrowUndoOutline } from 'ionicons/icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PaymentService } from '../../core/services/payment.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Payment } from '../../core/models/payment.model';
+import { Payment, PaymentStats } from '../../core/models/payment.model';
 
 @Component({
   selector: 'app-payments',
@@ -50,11 +51,13 @@ import { Payment } from '../../core/models/payment.model';
 export class PaymentsPage implements OnInit {
   private readonly paymentService = inject(PaymentService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
   private readonly toastController = inject(ToastController);
   private readonly translate = inject(TranslateService);
 
   readonly payments = signal<Payment[]>([]);
+  readonly stats = signal<PaymentStats | null>(null);
   readonly loading = signal(true);
   readonly page = signal(0);
   readonly hasMore = signal(true);
@@ -67,6 +70,14 @@ export class PaymentsPage implements OnInit {
 
   ngOnInit(): void {
     this.load(true);
+    this.paymentService.getStats().subscribe({
+      next: (stats) => this.stats.set(stats),
+      error: () => {},
+    });
+  }
+
+  openReceipt(payment: Payment): void {
+    this.router.navigate(['/tabs/payments', payment.referenceNumber]);
   }
 
   load(reset: boolean, event?: CustomEvent): void {
