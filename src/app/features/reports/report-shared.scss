@@ -1,0 +1,129 @@
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 90px 0;
+}
+
+.date-range {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 16px;
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-md);
+  box-shadow: var(--sp-shadow-sm);
+  padding: 10px 14px;
+
+  input[type='date'] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--sp-text);
+    font-family: var(--ion-font-family);
+    font-size: 13px;
+    min-width: 0;
+  }
+
+  span {
+    color: var(--sp-text-faint);
+    font-size: 12px;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 4px 16px 12px;
+}
+
+.stat-card {
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-lg);
+  padding: 16px;
+  box-shadow: var(--sp-shadow-sm);
+
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--sp-text);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--sp-text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  &.highlight {
+    background: var(--sp-gradient-primary);
+    box-shadow: var(--sp-shadow-primary);
+
+    .stat-value,
+    .stat-label {
+      color: #ffffff;
+    }
+  }
+
+  &.danger .stat-value {
+    color: var(--ion-color-danger);
+  }
+
+  &.warn .stat-value {
+    color: var(--ion-color-warning);
+  }
+}
+
+.section {
+  padding: 4px 16px 20px;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--sp-text);
+    margin: 12px 2px 8px;
+  }
+}
+
+.report-list {
+  background: var(--sp-surface-raised);
+  border-radius: var(--sp-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sp-shadow-sm);
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sp-border);
+  font-size: 13.5px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .primary {
+    color: var(--sp-text);
+    font-weight: 600;
+  }
+
+  .secondary {
+    color: var(--sp-text-muted);
+    font-size: 12px;
+  }
+
+  .value {
+    color: var(--ion-color-primary);
+    font-weight: 700;
+  }
+}
+
+.empty-row {
+  padding: 30px 16px;
+  text-align: center;
+  color: var(--sp-text-faint);
+  font-size: 13px;
+}

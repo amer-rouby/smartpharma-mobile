@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/reports"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'reports.sales' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="date-range">
+    <input type="date" [ngModel]="startDate()" (ngModelChange)="startDate.set($event); load()" />
+    <span>→</span>
+    <input type="date" [ngModel]="endDate()" (ngModelChange)="endDate.set($event); load()" />
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (report(); as r) {
+    <div class="stats-grid">
+      <div class="stat-card highlight">
+        <div class="stat-value">{{ r.totalRevenue | number: '1.0-0' }}</div>
+        <div class="stat-label">{{ 'reports.totalRevenue' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.totalOrders }}</div>
+        <div class="stat-label">{{ 'reports.totalOrders' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.averageOrder | number: '1.0-0' }}</div>
+        <div class="stat-label">{{ 'reports.averageOrder' | translate }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ r.totalItems }}</div>
+        <div class="stat-label">{{ 'reports.totalItems' | translate }}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>{{ 'reports.topProducts' | translate }}</h3>
+      <div class="report-list">
+        @for (product of r.topProducts; track product.productId) {
+          <div class="report-row">
+            <div>
+              <div class="primary">{{ product.productName }}</div>
+              <div class="secondary">{{ product.quantitySold }} {{ 'reports.units' | translate }}</div>
+            </div>
+            <span class="value">{{ product.totalRevenue | number: '1.0-0' }}</span>
+          </div>
+        } @empty {
+          <div class="empty-row">{{ 'reports.noData' | translate }}</div>
+        }
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>{{ 'reports.revenueByPayment' | translate }}</h3>
+      <div class="report-list">
+        @for (entry of paymentMethodEntries(); track entry[0]) {
+          <div class="report-row">
+            <span class="primary">{{ ('payment.' + entry[0]) | translate }}</span>
+            <span class="value">{{ entry[1] | number: '1.0-0' }}</span>
+          </div>
+        } @empty {
+          <div class="empty-row">{{ 'reports.noData' | translate }}</div>
+        }
+      </div>
+    </div>
+  }
+</ion-content>
