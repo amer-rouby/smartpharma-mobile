@@ -131,6 +131,7 @@
     "reports": "Reports",
     "stockBatches": "Stock Batches",
     "stockMovements": "Stock Movements",
+    "demandPrediction": "Demand Prediction",
     "settings": "Notification Settings",
     "account": "My Account",
     "administration": "Administration",
@@ -209,6 +210,22 @@
     "shelf": "Shelf",
     "notes": "Notes",
     "saveFailed": "Failed to save batch"
+  },
+  "demandPrediction": {
+    "title": "Demand Prediction",
+    "emptyState": "No predictions",
+    "totalPredictions": "Predictions",
+    "accuracy": "Accuracy",
+    "predicted": "Predicted",
+    "currentStock": "Current Stock",
+    "recommended": "Recommended",
+    "orderNow": "Order Now",
+    "generateSuccess": "New predictions generated",
+    "generateFailed": "Failed to generate predictions",
+    "noOrderNeeded": "No order needed right now",
+    "purchaseCreated": "Purchase order {{order}} created",
+    "purchaseFailed": "Failed to create purchase order",
+    "deleteConfirmTitle": "Delete Prediction"
   },
   "stockMovements": {
     "title": "Stock Movements",

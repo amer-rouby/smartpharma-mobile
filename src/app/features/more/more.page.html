@@ -45,6 +45,12 @@
       <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
     </ion-item>
 
+    <ion-item button (click)="goTo('/tabs/demand-predictions')">
+      <div class="menu-icon" slot="start"><ion-icon name="analytics-outline"></ion-icon></div>
+      <ion-label>{{ 'more.demandPrediction' | translate }}</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
     @if (canViewExpenses) {
       <ion-item button (click)="goTo('/tabs/expenses')">
         <div class="menu-icon" slot="start"><ion-icon name="wallet-outline"></ion-icon></div>

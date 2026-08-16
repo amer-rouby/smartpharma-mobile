@@ -156,6 +156,13 @@ export const routes: Routes = [
           import('../features/stock-movements/stock-movements.page').then((m) => m.StockMovementsPage),
       },
       {
+        path: 'demand-predictions',
+        loadComponent: () =>
+          import('../features/demand-predictions/demand-predictions.page').then(
+            (m) => m.DemandPredictionsPage
+          ),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

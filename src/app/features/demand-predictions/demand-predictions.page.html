@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'demandPrediction.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="generate()" [disabled]="generating()">
+        <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (stats(); as s) {
+    <div class="stats-row">
+      <div class="stat-chip">
+        <span class="value">{{ s.totalPredictions }}</span>
+        <span class="label">{{ 'demandPrediction.totalPredictions' | translate }}</span>
+      </div>
+      <div class="stat-chip">
+        <span class="value">{{ (s.averageAccuracy * 100) | number: '1.0-0' }}%</span>
+        <span class="label">{{ 'demandPrediction.accuracy' | translate }}</span>
+      </div>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (predictions().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="analytics-outline"></ion-icon>
+      <p>{{ 'demandPrediction.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <div class="prediction-list">
+      @for (prediction of predictions(); track prediction.predictionId) {
+        <div class="prediction-card">
+          <div class="prediction-header">
+            <span class="product-name">{{ prediction.productName }}</span>
+            <ion-icon [name]="trendIcon(prediction.trend)" [color]="trendColor(prediction.trend)"></ion-icon>
+          </div>
+          <div class="prediction-stats">
+            <div class="mini-stat">
+              <span class="value">{{ prediction.predictedQuantity }}</span>
+              <span class="label">{{ 'demandPrediction.predicted' | translate }}</span>
+            </div>
+            <div class="mini-stat">
+              <span class="value">{{ prediction.currentStock }}</span>
+              <span class="label">{{ 'demandPrediction.currentStock' | translate }}</span>
+            </div>
+            <div class="mini-stat">
+              <span class="value">{{ prediction.recommendedOrder }}</span>
+              <span class="label">{{ 'demandPrediction.recommended' | translate }}</span>
+            </div>
+          </div>
+          <p class="recommendation">{{ prediction.recommendation }}</p>
+          <div class="prediction-actions">
+            <ion-button fill="outline" size="small" (click)="createPurchase(prediction)">
+              <ion-icon name="cart-outline" slot="start"></ion-icon>
+              {{ 'demandPrediction.orderNow' | translate }}
+            </ion-button>
+            <ion-button fill="clear" size="small" color="danger" (click)="deletePrediction(prediction)">
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+</ion-content>
