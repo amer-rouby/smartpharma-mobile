@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>طلبات الشراء</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (orders().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <p>مفيش طلبات شراء</p>
+    </div>
+  } @else {
+    <ion-list class="order-list">
+      @for (order of orders(); track order.id) {
+        <ion-item button detail="true" (click)="openOrder(order)">
+          <div class="order-icon" slot="start">
+            <ion-icon name="cart-outline"></ion-icon>
+          </div>
+          <ion-label>
+            <h2>{{ order.orderNumber }}</h2>
+            <p>{{ order.supplierName }}</p>
+            <p class="price">{{ order.totalAmount | number: '1.0-2' }} ج.م</p>
+          </ion-label>
+          <ion-badge slot="end" [color]="statusColors[order.status]">
+            {{ statusLabels[order.status] }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+</ion-content>

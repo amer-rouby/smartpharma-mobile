@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>إعدادات الإشعارات</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (settings(); as s) {
+    <ion-list inset="true">
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.emailNotifications">البريد الإلكتروني</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.pushNotifications">الإشعارات الفورية</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.soundEnabled">الصوت</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.vibrationEnabled">الاهتزاز</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>لغة البريد الإلكتروني</ion-label>
+        <ion-select [(ngModel)]="s.preferredLanguage" interface="action-sheet">
+          <ion-select-option value="ar">العربية</ion-select-option>
+          <ion-select-option value="en">English</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list inset="true">
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.quietHoursEnabled">ساعات الهدوء</ion-toggle>
+      </ion-item>
+      @if (s.quietHoursEnabled) {
+        <ion-item>
+          <ion-label position="stacked">من</ion-label>
+          <ion-input type="time" [(ngModel)]="s.quietHoursStart"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">إلى</ion-label>
+          <ion-input type="time" [(ngModel)]="s.quietHoursEnd"></ion-input>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-list inset="true">
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyLowStock">مخزون منخفض</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyOutOfStock">نفاد المخزون</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyExpiryWarning">صلاحية قريبة</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyExpiredProducts">منتجات منتهية</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyNewSale">عملية بيع جديدة</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyLargeSale">عملية بيع كبيرة</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyNewExpense">مصروف جديد</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyLargeExpense">مصروف كبير</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifyBackupReminder">تذكير النسخ الاحتياطي</ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-toggle [(ngModel)]="s.notifySecurityAlerts">تنبيهات أمنية</ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <div class="save-wrapper">
+      <ion-button expand="block" [disabled]="saving()" (click)="save()">
+        {{ saving() ? 'جارٍ الحفظ...' : 'حفظ' }}
+      </ion-button>
+    </div>
+  }
+</ion-content>

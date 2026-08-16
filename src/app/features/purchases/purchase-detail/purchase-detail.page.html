@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/purchases"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ order()?.orderNumber || 'تفاصيل الطلب' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (order(); as o) {
+    <div class="summary-card">
+      <div class="summary-row">
+        <span>المورد</span>
+        <span>{{ o.supplierName }}</span>
+      </div>
+      <div class="summary-row">
+        <span>الحالة</span>
+        <ion-badge [color]="statusColors[o.status]">{{ statusLabels[o.status] }}</ion-badge>
+      </div>
+      <div class="summary-row">
+        <span>تاريخ الطلب</span>
+        <span>{{ o.orderDate }}</span>
+      </div>
+      @if (o.expectedDeliveryDate) {
+        <div class="summary-row">
+          <span>التسليم المتوقع</span>
+          <span>{{ o.expectedDeliveryDate }}</span>
+        </div>
+      }
+      <div class="summary-row total">
+        <span>الإجمالي</span>
+        <span>{{ o.totalAmount | number: '1.0-2' }} ج.م</span>
+      </div>
+    </div>
+
+    <ion-list>
+      @for (item of o.items; track item.id) {
+        <ion-item>
+          <ion-label>
+            <h3>{{ item.productName }}</h3>
+            <p>{{ item.quantity }} × {{ item.unitPrice | number: '1.0-2' }} ج.م</p>
+          </ion-label>
+          <ion-label slot="end" class="ion-text-end">
+            {{ item.totalPrice | number: '1.0-2' }} ج.م
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

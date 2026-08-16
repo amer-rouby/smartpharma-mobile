@@ -5,22 +5,27 @@
       <ion-label>الرئيسية</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="pos" href="/tabs/pos">
+      <ion-icon aria-hidden="true" name="cart-outline"></ion-icon>
+      <ion-label>البيع</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="products" href="/tabs/products">
       <ion-icon aria-hidden="true" name="cube-outline"></ion-icon>
       <ion-label>المنتجات</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="notifications" href="/tabs/notifications">
-      <ion-icon aria-hidden="true" name="notifications-outline"></ion-icon>
+    <ion-tab-button tab="stock" href="/tabs/stock">
+      <ion-icon aria-hidden="true" name="alert-circle-outline"></ion-icon>
+      <ion-label>المخزون</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="more" href="/tabs/more">
+      <ion-icon aria-hidden="true" name="menu-outline"></ion-icon>
       @if (unreadCount() > 0) {
         <ion-badge color="danger">{{ unreadCount() }}</ion-badge>
       }
-      <ion-label>الإشعارات</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="profile" href="/tabs/profile">
-      <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
-      <ion-label>حسابي</ion-label>
+      <ion-label>المزيد</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

@@ -11,13 +11,41 @@ export const routes: Routes = [
         loadComponent: () => import('../features/dashboard/dashboard.page').then((m) => m.DashboardPage),
       },
       {
+        path: 'pos',
+        loadComponent: () => import('../features/pos/pos.page').then((m) => m.PosPage),
+      },
+      {
         path: 'products',
         loadComponent: () => import('../features/products/products.page').then((m) => m.ProductsPage),
       },
       {
+        path: 'stock',
+        loadComponent: () => import('../features/stock/stock.page').then((m) => m.StockPage),
+      },
+      {
+        path: 'more',
+        loadComponent: () => import('../features/more/more.page').then((m) => m.MorePage),
+      },
+      // Reachable from the "More" tab but not shown in the tab bar itself.
+      {
         path: 'notifications',
         loadComponent: () =>
           import('../features/notifications/notifications.page').then((m) => m.NotificationsPage),
+      },
+      {
+        path: 'purchases',
+        loadComponent: () => import('../features/purchases/purchases.page').then((m) => m.PurchasesPage),
+      },
+      {
+        path: 'purchases/:id',
+        loadComponent: () =>
+          import('../features/purchases/purchase-detail/purchase-detail.page').then(
+            (m) => m.PurchaseDetailPage
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () => import('../features/settings/settings.page').then((m) => m.SettingsPage),
       },
       {
         path: 'profile',

@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>المزيد</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list inset="true">
+    <ion-item button (click)="goTo('/tabs/notifications')">
+      <div class="menu-icon" slot="start"><ion-icon name="notifications-outline"></ion-icon></div>
+      <ion-label>الإشعارات</ion-label>
+      @if (unreadCount() > 0) {
+        <ion-badge slot="end" color="danger">{{ unreadCount() }}</ion-badge>
+      }
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
+    <ion-item button (click)="goTo('/tabs/purchases')">
+      <div class="menu-icon" slot="start"><ion-icon name="cart-outline"></ion-icon></div>
+      <ion-label>طلبات الشراء</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
+    <ion-item button (click)="goTo('/tabs/settings')">
+      <div class="menu-icon" slot="start"><ion-icon name="settings-outline"></ion-icon></div>
+      <ion-label>إعدادات الإشعارات</ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+
+    <ion-item button (click)="goTo('/tabs/profile')">
+      <div class="menu-icon" slot="start"><ion-icon name="person-circle-outline"></ion-icon></div>
+      <ion-label>
+        <h3>حسابي</h3>
+        <p>{{ userName() }}</p>
+      </ion-label>
+      <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

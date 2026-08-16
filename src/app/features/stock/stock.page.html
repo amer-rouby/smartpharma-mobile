@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>تنبيهات المخزون</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (alerts().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="checkmark-done-outline"></ion-icon>
+      <p>مفيش تنبيهات مخزون حاليًا</p>
+    </div>
+  } @else {
+    <ion-list class="alert-list">
+      @for (alert of alerts(); track alert.id) {
+        <ion-item>
+          <div class="alert-icon" slot="start" [attr.data-severity]="alert.severity">
+            <ion-icon [name]="iconFor(alert.alertType)" [color]="colorFor(alert.severity)"></ion-icon>
+          </div>
+          <ion-label class="ion-text-wrap">
+            <h2>{{ alert.title }}</h2>
+            <p>{{ alert.message }}</p>
+          </ion-label>
+          <ion-button slot="end" fill="clear" size="small" (click)="resolve(alert)">
+            تم الحل
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>
