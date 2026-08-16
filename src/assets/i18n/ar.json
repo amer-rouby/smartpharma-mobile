@@ -131,6 +131,7 @@
     "reports": "التقارير",
     "stockBatches": "دفعات المخزون",
     "stockMovements": "حركة المخزون",
+    "demandPrediction": "توقع الطلب",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
     "administration": "الإدارة",
@@ -209,6 +210,22 @@
     "shelf": "الرف",
     "notes": "ملاحظات",
     "saveFailed": "فشل حفظ الدفعة"
+  },
+  "demandPrediction": {
+    "title": "توقع الطلب",
+    "emptyState": "مفيش توقعات",
+    "totalPredictions": "عدد التوقعات",
+    "accuracy": "الدقة",
+    "predicted": "المتوقع",
+    "currentStock": "المخزون الحالي",
+    "recommended": "الموصى به",
+    "orderNow": "اطلب دلوقتي",
+    "generateSuccess": "تم إنشاء توقعات جديدة",
+    "generateFailed": "فشل إنشاء التوقعات",
+    "noOrderNeeded": "مفيش حاجة لطلب دلوقتي",
+    "purchaseCreated": "تم إنشاء طلب شراء {{order}}",
+    "purchaseFailed": "فشل إنشاء طلب الشراء",
+    "deleteConfirmTitle": "حذف التوقع"
   },
   "stockMovements": {
     "title": "حركة المخزون",
