@@ -132,6 +132,7 @@
     "stockBatches": "دفعات المخزون",
     "stockMovements": "حركة المخزون",
     "demandPrediction": "توقع الطلب",
+    "payments": "المدفوعات والمرتجعات",
     "settings": "إعدادات الإشعارات",
     "account": "حسابي",
     "administration": "الإدارة",
@@ -210,6 +211,17 @@
     "shelf": "الرف",
     "notes": "ملاحظات",
     "saveFailed": "فشل حفظ الدفعة"
+  },
+  "payments": {
+    "title": "المدفوعات والمرتجعات",
+    "emptyState": "مفيش مدفوعات",
+    "refundTitle": "استرجاع مبلغ",
+    "refundAmount": "المبلغ",
+    "refundReason": "السبب",
+    "refundConfirm": "تأكيد الاسترجاع",
+    "refundInvalidAmount": "المبلغ غير صحيح",
+    "refundSuccess": "تم الاسترجاع بنجاح",
+    "refundFailed": "فشل الاسترجاع"
   },
   "demandPrediction": {
     "title": "توقع الطلب",
