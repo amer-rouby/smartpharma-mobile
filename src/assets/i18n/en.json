@@ -1,0 +1,147 @@
+{
+  "common": {
+    "appName": "SmartPharma",
+    "appTagline": "Pharmacy Management System",
+    "currency": "EGP",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading..."
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "submit": "Log In",
+    "twoFactorNotSupported": "This account requires two-factor verification, which isn't supported in the mobile app yet",
+    "loginFailed": "Login failed - check your username and password"
+  },
+  "tabs": {
+    "home": "Home",
+    "pos": "Sell",
+    "products": "Products",
+    "stock": "Stock",
+    "more": "More"
+  },
+  "dashboard": {
+    "greeting": "Hello,",
+    "todayRevenue": "Today's Sales",
+    "todayOrders": "Invoices",
+    "totalProducts": "Total Products",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "expiringSoon": "Expiring Soon",
+    "recentSales": "Recent Sales"
+  },
+  "pos": {
+    "title": "New Sale",
+    "searchPlaceholder": "Search for a product to add...",
+    "emptyCart": "Search for a product or scan a barcode to start a sale",
+    "outOfStockProduct": "\"{{name}}\" is out of stock",
+    "maxQuantity": "Quantity has reached the available stock limit",
+    "cartEmpty": "Cart is empty",
+    "prescriptionRequired": "One item requires a prescription - prescription upload isn't supported in the mobile app yet",
+    "paymentMethod": "Payment Method",
+    "discount": "Discount (optional)",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Complete Sale",
+    "checkingOut": "Completing sale...",
+    "saleSuccess": "Sale completed successfully - invoice {{invoice}}",
+    "saleFailed": "Sale failed",
+    "scanUnavailable": "Camera scanning is only available in the mobile app",
+    "cameraPermission": "Camera permission is needed to scan barcodes",
+    "scanError": "An error occurred while scanning",
+    "noProductForBarcode": "No product found for this barcode"
+  },
+  "products": {
+    "title": "Products",
+    "searchPlaceholder": "Search by name or barcode...",
+    "emptyState": "No products match your search",
+    "scanUnavailable": "Camera scanning is only available in the mobile app, not in the browser",
+    "cameraPermission": "Camera permission is needed to scan barcodes",
+    "scanError": "An error occurred while scanning",
+    "noProductForBarcode": "No product found for this barcode"
+  },
+  "stock": {
+    "title": "Stock Alerts",
+    "emptyState": "No stock alerts right now",
+    "resolve": "Resolve"
+  },
+  "purchases": {
+    "title": "Purchase Orders",
+    "emptyState": "No purchase orders",
+    "detailFallbackTitle": "Order Details",
+    "supplier": "Supplier",
+    "status": "Status",
+    "orderDate": "Order Date",
+    "expectedDelivery": "Expected Delivery",
+    "total": "Total"
+  },
+  "settings": {
+    "title": "Notification Settings",
+    "email": "Email",
+    "push": "Push Notifications",
+    "sound": "Sound",
+    "vibration": "Vibration",
+    "emailLanguage": "Email Language",
+    "arabic": "العربية",
+    "english": "English",
+    "quietHours": "Quiet Hours",
+    "quietHoursFrom": "From",
+    "quietHoursTo": "To",
+    "notifyLowStock": "Low Stock",
+    "notifyOutOfStock": "Out of Stock",
+    "notifyExpiryWarning": "Expiry Warning",
+    "notifyExpiredProducts": "Expired Products",
+    "notifyNewSale": "New Sale",
+    "notifyLargeSale": "Large Sale",
+    "notifyNewExpense": "New Expense",
+    "notifyLargeExpense": "Large Expense",
+    "notifyBackupReminder": "Backup Reminder",
+    "notifySecurityAlerts": "Security Alerts",
+    "saveSuccess": "Settings saved successfully",
+    "saveFailed": "Failed to save settings"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "emptyState": "No new notifications"
+  },
+  "profile": {
+    "title": "My Account",
+    "pharmacy": "Pharmacy",
+    "role": "Role",
+    "logout": "Log Out",
+    "logoutConfirmTitle": "Log Out",
+    "logoutConfirmMessage": "Do you want to log out of your account?"
+  },
+  "more": {
+    "title": "More",
+    "notifications": "Notifications",
+    "purchases": "Purchase Orders",
+    "settings": "Notification Settings",
+    "account": "My Account",
+    "preferences": "Preferences",
+    "language": "Language",
+    "theme": "Theme",
+    "lightMode": "Light",
+    "darkMode": "Dark"
+  },
+  "payment": {
+    "CASH": "Cash",
+    "VISA": "Visa",
+    "MASTERCARD": "Mastercard",
+    "INSTAPAY": "InstaPay",
+    "FAWRY": "Fawry",
+    "WALLET": "E-Wallet",
+    "BANK_TRANSFER": "Bank Transfer"
+  },
+  "purchaseStatus": {
+    "DRAFT": "Draft",
+    "PENDING": "Pending",
+    "APPROVED": "Approved",
+    "RECEIVED": "Received",
+    "CANCELLED": "Cancelled"
+  }
+}

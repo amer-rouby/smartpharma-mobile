@@ -1,0 +1,147 @@
+{
+  "common": {
+    "appName": "صيدليتي الذكية",
+    "appTagline": "نظام إدارة الصيدليات",
+    "currency": "ج.م",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "loading": "جاري التحميل..."
+  },
+  "login": {
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "twoFactorNotSupported": "هذا الحساب يتطلب تحقق ثنائي غير مدعوم بعد في تطبيق الموبايل",
+    "loginFailed": "فشل تسجيل الدخول - تأكد من اسم المستخدم وكلمة المرور"
+  },
+  "tabs": {
+    "home": "الرئيسية",
+    "pos": "البيع",
+    "products": "المنتجات",
+    "stock": "المخزون",
+    "more": "المزيد"
+  },
+  "dashboard": {
+    "greeting": "مرحبًا،",
+    "todayRevenue": "مبيعات اليوم",
+    "todayOrders": "عدد الفواتير",
+    "totalProducts": "إجمالي المنتجات",
+    "lowStock": "مخزون منخفض",
+    "outOfStock": "نفاد المخزون",
+    "expiringSoon": "قريبة الانتهاء",
+    "recentSales": "آخر المبيعات"
+  },
+  "pos": {
+    "title": "عملية بيع جديدة",
+    "searchPlaceholder": "ابحث عن منتج لإضافته...",
+    "emptyCart": "ابحث عن منتج أو امسح الباركود عشان تبدأ عملية بيع",
+    "outOfStockProduct": "المنتج \"{{name}}\" نفد من المخزون",
+    "maxQuantity": "الكمية وصلت للحد الأقصى المتاح بالمخزون",
+    "cartEmpty": "السلة فارغة",
+    "prescriptionRequired": "يوجد منتج يتطلب وصفة طبية - رفع الوصفة غير مدعوم حاليًا في تطبيق الموبايل",
+    "paymentMethod": "طريقة الدفع",
+    "discount": "الخصم (اختياري)",
+    "subtotal": "الإجمالي الفرعي",
+    "total": "الإجمالي",
+    "checkout": "إتمام البيع",
+    "checkingOut": "جارٍ إتمام العملية...",
+    "saleSuccess": "تمت عملية البيع بنجاح - فاتورة {{invoice}}",
+    "saleFailed": "فشلت عملية البيع",
+    "scanUnavailable": "المسح بالكاميرا متاح فقط داخل تطبيق الموبايل",
+    "cameraPermission": "محتاجين إذن الكاميرا عشان نقدر نمسح الباركود",
+    "scanError": "حصل خطأ أثناء المسح",
+    "noProductForBarcode": "مفيش منتج بالباركود ده"
+  },
+  "products": {
+    "title": "المنتجات",
+    "searchPlaceholder": "ابحث بالاسم أو الباركود...",
+    "emptyState": "مفيش منتجات تطابق البحث",
+    "scanUnavailable": "المسح بالكاميرا متاح فقط داخل تطبيق الموبايل، مش في المتصفح",
+    "cameraPermission": "محتاجين إذن الكاميرا عشان نقدر نمسح الباركود",
+    "scanError": "حصل خطأ أثناء المسح",
+    "noProductForBarcode": "مفيش منتج بالباركود ده"
+  },
+  "stock": {
+    "title": "تنبيهات المخزون",
+    "emptyState": "مفيش تنبيهات مخزون حاليًا",
+    "resolve": "تم الحل"
+  },
+  "purchases": {
+    "title": "طلبات الشراء",
+    "emptyState": "مفيش طلبات شراء",
+    "detailFallbackTitle": "تفاصيل الطلب",
+    "supplier": "المورد",
+    "status": "الحالة",
+    "orderDate": "تاريخ الطلب",
+    "expectedDelivery": "التسليم المتوقع",
+    "total": "الإجمالي"
+  },
+  "settings": {
+    "title": "إعدادات الإشعارات",
+    "email": "البريد الإلكتروني",
+    "push": "الإشعارات الفورية",
+    "sound": "الصوت",
+    "vibration": "الاهتزاز",
+    "emailLanguage": "لغة البريد الإلكتروني",
+    "arabic": "العربية",
+    "english": "English",
+    "quietHours": "ساعات الهدوء",
+    "quietHoursFrom": "من",
+    "quietHoursTo": "إلى",
+    "notifyLowStock": "مخزون منخفض",
+    "notifyOutOfStock": "نفاد المخزون",
+    "notifyExpiryWarning": "صلاحية قريبة",
+    "notifyExpiredProducts": "منتجات منتهية",
+    "notifyNewSale": "عملية بيع جديدة",
+    "notifyLargeSale": "عملية بيع كبيرة",
+    "notifyNewExpense": "مصروف جديد",
+    "notifyLargeExpense": "مصروف كبير",
+    "notifyBackupReminder": "تذكير النسخ الاحتياطي",
+    "notifySecurityAlerts": "تنبيهات أمنية",
+    "saveSuccess": "تم حفظ الإعدادات بنجاح",
+    "saveFailed": "فشل حفظ الإعدادات"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "emptyState": "مفيش إشعارات جديدة"
+  },
+  "profile": {
+    "title": "حسابي",
+    "pharmacy": "الصيدلية",
+    "role": "الصلاحية",
+    "logout": "تسجيل الخروج",
+    "logoutConfirmTitle": "تسجيل الخروج",
+    "logoutConfirmMessage": "هل تريد تسجيل الخروج من الحساب؟"
+  },
+  "more": {
+    "title": "المزيد",
+    "notifications": "الإشعارات",
+    "purchases": "طلبات الشراء",
+    "settings": "إعدادات الإشعارات",
+    "account": "حسابي",
+    "preferences": "التفضيلات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "lightMode": "فاتح",
+    "darkMode": "داكن"
+  },
+  "payment": {
+    "CASH": "نقدي",
+    "VISA": "فيزا",
+    "MASTERCARD": "ماستركارد",
+    "INSTAPAY": "إنستا باي",
+    "FAWRY": "فوري",
+    "WALLET": "محفظة إلكترونية",
+    "BANK_TRANSFER": "تحويل بنكي"
+  },
+  "purchaseStatus": {
+    "DRAFT": "مسودة",
+    "PENDING": "معلّق",
+    "APPROVED": "معتمد",
+    "RECEIVED": "تم الاستلام",
+    "CANCELLED": "ملغي"
+  }
+}

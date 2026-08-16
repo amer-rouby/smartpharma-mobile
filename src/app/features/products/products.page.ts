@@ -22,6 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { scanOutline, cubeOutline } from 'ionicons/icons';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../core/services/product.service';
 import { Product } from '../../core/models/product.model';
 
@@ -33,6 +34,7 @@ import { Product } from '../../core/models/product.model';
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -53,6 +55,7 @@ import { Product } from '../../core/models/product.model';
 export class ProductsPage implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly toastController = inject(ToastController);
+  private readonly translate = inject(TranslateService);
 
   readonly products = signal<Product[]>([]);
   readonly loading = signal(true);
@@ -116,7 +119,7 @@ export class ProductsPage implements OnInit {
 
   async onScanBarcode(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      this.showToast('المسح بالكاميرا متاح فقط داخل تطبيق الموبايل، مش في المتصفح');
+      this.showToast(this.translate.instant('products.scanUnavailable'));
       return;
     }
 
@@ -124,7 +127,7 @@ export class ProductsPage implements OnInit {
       const { BarcodeScanner } = await import('@capacitor-mlkit/barcode-scanning');
       const { camera } = await BarcodeScanner.requestPermissions();
       if (camera !== 'granted' && camera !== 'limited') {
-        this.showToast('محتاجين إذن الكاميرا عشان نقدر نمسح الباركود');
+        this.showToast(this.translate.instant('products.cameraPermission'));
         return;
       }
 
@@ -140,12 +143,12 @@ export class ProductsPage implements OnInit {
             this.searchTerm.set(product.name);
             this.products.set([product]);
           } else {
-            this.showToast('مفيش منتج بالباركود ده');
+            this.showToast(this.translate.instant('products.noProductForBarcode'));
           }
         },
       });
     } catch (error) {
-      this.showToast('حصل خطأ أثناء المسح');
+      this.showToast(this.translate.instant('products.scanError'));
     }
   }
 

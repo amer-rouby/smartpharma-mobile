@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>الإشعارات</ion-title>
+    <ion-title>{{ 'notifications.title' | translate }}</ion-title>
     <ion-buttons slot="end">
       @if (notifications().length > 0) {
-        <ion-button (click)="markAllAsRead()">تحديد الكل كمقروء</ion-button>
+        <ion-button (click)="markAllAsRead()">{{ 'notifications.markAllRead' | translate }}</ion-button>
       }
     </ion-buttons>
   </ion-toolbar>
@@ -21,7 +21,7 @@
   } @else if (notifications().length === 0) {
     <div class="empty-state">
       <ion-icon name="notifications-off-outline"></ion-icon>
-      <p>مفيش إشعارات جديدة</p>
+      <p>{{ 'notifications.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="notif-list">

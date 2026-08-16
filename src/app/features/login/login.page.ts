@@ -13,7 +13,9 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personOutline, lockClosedOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
+import { LanguageService } from '../../core/services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ import { AuthService } from '../../core/services/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    TranslateModule,
     IonContent,
     IonItem,
     IonInput,
@@ -36,6 +39,8 @@ export class LoginPage {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
+  readonly languageService = inject(LanguageService);
 
   readonly loading = signal(false);
   readonly errorMessage = signal<string | null>(null);
@@ -69,16 +74,14 @@ export class LoginPage {
         this.loading.set(false);
         if (response.twoFactorRequired) {
           // TODO: build a 2FA code-entry step once the web app's flow is mirrored here.
-          this.errorMessage.set('هذا الحساب يتطلب تحقق ثنائي غير مدعوم بعد في تطبيق الموبايل');
+          this.errorMessage.set(this.translate.instant('login.twoFactorNotSupported'));
           return;
         }
         this.router.navigate(['/tabs/dashboard']);
       },
       error: (err) => {
         this.loading.set(false);
-        this.errorMessage.set(
-          err?.error?.message || 'فشل تسجيل الدخول - تأكد من اسم المستخدم وكلمة المرور'
-        );
+        this.errorMessage.set(err?.error?.message || this.translate.instant('login.loginFailed'));
       },
     });
   }

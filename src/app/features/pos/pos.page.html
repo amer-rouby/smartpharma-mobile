@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>عملية بيع جديدة</ion-title>
+    <ion-title>{{ 'pos.title' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onScanBarcode()">
         <ion-icon name="scan-outline" slot="icon-only"></ion-icon>
@@ -9,7 +9,7 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      placeholder="ابحث عن منتج لإضافته..."
+      [placeholder]="'pos.searchPlaceholder' | translate"
       [debounce]="0"
       [value]="searchTerm()"
       (ionInput)="onSearchChange($any($event.target).value)"
@@ -24,7 +24,7 @@
         <ion-item button (click)="addToCart(product)">
           <ion-label>
             <h3>{{ product.name }}</h3>
-            <p>{{ product.sellPrice | number: '1.0-2' }} ج.م</p>
+            <p>{{ product.sellPrice | number: '1.0-2' }} {{ 'common.currency' | translate }}</p>
           </ion-label>
           <ion-badge slot="end" [color]="product.totalStock > 0 ? 'success' : 'danger'">
             {{ product.totalStock }}
@@ -37,7 +37,7 @@
   @if (cart().length === 0 && searchResults().length === 0) {
     <div class="empty-cart">
       <ion-icon name="cart-outline"></ion-icon>
-      <p>ابحث عن منتج أو امسح الباركود عشان تبدأ عملية بيع</p>
+      <p>{{ 'pos.emptyCart' | translate }}</p>
     </div>
   }
 
@@ -47,7 +47,7 @@
         <ion-item>
           <ion-label>
             <h3>{{ line.product.name }}</h3>
-            <p>{{ line.product.sellPrice | number: '1.0-2' }} ج.م × {{ line.quantity }}</p>
+            <p>{{ line.product.sellPrice | number: '1.0-2' }} {{ 'common.currency' | translate }} × {{ line.quantity }}</p>
           </ion-label>
           <div class="qty-controls" slot="end">
             <button class="qty-btn" (click)="decrementLine(line.product.id)">
@@ -67,26 +67,26 @@
 
     <div class="checkout-panel">
       <ion-item lines="none">
-        <ion-label position="stacked">طريقة الدفع</ion-label>
+        <ion-label position="stacked">{{ 'pos.paymentMethod' | translate }}</ion-label>
         <ion-select [(ngModel)]="paymentMethod" interface="action-sheet">
           @for (method of enabledPaymentMethods(); track method) {
-            <ion-select-option [value]="method">{{ paymentMethodLabels[method] || method }}</ion-select-option>
+            <ion-select-option [value]="method">{{ (paymentMethodKeys[method] || method) | translate }}</ion-select-option>
           }
         </ion-select>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-label position="stacked">الخصم (اختياري)</ion-label>
+        <ion-label position="stacked">{{ 'pos.discount' | translate }}</ion-label>
         <ion-input type="number" [(ngModel)]="discount" min="0"></ion-input>
       </ion-item>
 
       <div class="totals-row">
-        <span>الإجمالي الفرعي</span>
-        <span>{{ subtotal() | number: '1.0-2' }} ج.م</span>
+        <span>{{ 'pos.subtotal' | translate }}</span>
+        <span>{{ subtotal() | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
       </div>
       <div class="totals-row grand-total">
-        <span>الإجمالي</span>
-        <span>{{ total() | number: '1.0-2' }} ج.م</span>
+        <span>{{ 'pos.total' | translate }}</span>
+        <span>{{ total() | number: '1.0-2' }} {{ 'common.currency' | translate }}</span>
       </div>
     </div>
   }
@@ -96,7 +96,7 @@
   <ion-footer>
     <ion-toolbar>
       <ion-button expand="block" [disabled]="submitting()" (click)="onSubmit()">
-        {{ submitting() ? 'جارٍ إتمام العملية...' : 'إتمام البيع' }}
+        {{ (submitting() ? 'pos.checkingOut' : 'pos.checkout') | translate }}
       </ion-button>
     </ion-toolbar>
   </ion-footer>

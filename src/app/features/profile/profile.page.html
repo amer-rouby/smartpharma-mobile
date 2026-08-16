@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>حسابي</ion-title>
+    <ion-title>{{ 'profile.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
     <ion-item>
       <ion-icon name="business-outline" slot="start"></ion-icon>
       <ion-label>
-        <h3>الصيدلية</h3>
+        <h3>{{ 'profile.pharmacy' | translate }}</h3>
         <p>{{ user?.pharmacyName }}</p>
       </ion-label>
     </ion-item>
@@ -23,7 +23,7 @@
     <ion-item>
       <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
       <ion-label>
-        <h3>الصلاحية</h3>
+        <h3>{{ 'profile.role' | translate }}</h3>
         <p>{{ user?.role }}</p>
       </ion-label>
     </ion-item>
@@ -32,7 +32,7 @@
   <div class="logout-wrapper">
     <ion-button expand="block" color="danger" fill="outline" (click)="onLogout()">
       <ion-icon name="log-out-outline" slot="start"></ion-icon>
-      تسجيل الخروج
+      {{ 'profile.logout' | translate }}
     </ion-button>
   </div>
 </ion-content>

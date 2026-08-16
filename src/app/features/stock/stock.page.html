@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>تنبيهات المخزون</ion-title>
+    <ion-title>{{ 'stock.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
   } @else if (alerts().length === 0) {
     <div class="empty-state">
       <ion-icon name="checkmark-done-outline"></ion-icon>
-      <p>مفيش تنبيهات مخزون حاليًا</p>
+      <p>{{ 'stock.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="alert-list">
@@ -30,7 +30,7 @@
             <p>{{ alert.message }}</p>
           </ion-label>
           <ion-button slot="end" fill="clear" size="small" (click)="resolve(alert)">
-            تم الحل
+            {{ 'stock.resolve' | translate }}
           </ion-button>
         </ion-item>
       }

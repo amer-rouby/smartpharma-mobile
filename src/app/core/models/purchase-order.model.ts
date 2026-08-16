@@ -34,12 +34,12 @@ export interface PurchaseOrder {
   items: PurchaseOrderItem[];
 }
 
-export const STATUS_LABELS: Record<PurchaseOrderStatus, string> = {
-  DRAFT: 'مسودة',
-  PENDING: 'معلّق',
-  APPROVED: 'معتمد',
-  RECEIVED: 'تم الاستلام',
-  CANCELLED: 'ملغي',
+export const STATUS_LABEL_KEYS: Record<PurchaseOrderStatus, string> = {
+  DRAFT: 'purchaseStatus.DRAFT',
+  PENDING: 'purchaseStatus.PENDING',
+  APPROVED: 'purchaseStatus.APPROVED',
+  RECEIVED: 'purchaseStatus.RECEIVED',
+  CANCELLED: 'purchaseStatus.CANCELLED',
 };
 
 export const STATUS_COLORS: Record<PurchaseOrderStatus, string> = {
