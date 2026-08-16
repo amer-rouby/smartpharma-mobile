@@ -16,6 +16,12 @@ export class CategoryService {
     return new HttpParams().set('pharmacyId', this.authService.getPharmacyId() ?? '');
   }
 
+  getActiveCategories(): Observable<Category[]> {
+    return this.http
+      .get<ApiResponse<Category[]>>(`${this.apiUrl}/active`, { params: this.pharmacyIdParam() })
+      .pipe(map((response) => response.data ?? []));
+  }
+
   getPage(page: number, size: number, search: string): Observable<CategoryPage> {
     let params = this.pharmacyIdParam().set('page', page).set('size', size);
     if (search) params = params.set('search', search);

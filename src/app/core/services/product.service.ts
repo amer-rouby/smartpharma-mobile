@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/auth.model';
-import { PagedResponse, Product } from '../models/product.model';
+import { PagedResponse, Product, ProductRequest } from '../models/product.model';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
@@ -11,6 +11,10 @@ export class ProductService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
   private readonly apiUrl = `${environment.apiUrl}/products`;
+
+  private pharmacyIdParam(): HttpParams {
+    return new HttpParams().set('pharmacyId', this.authService.getPharmacyId() ?? '');
+  }
 
   getProductsPaged(page: number, size: number, search?: string): Observable<PagedResponse<Product>> {
     const pharmacyId = this.authService.getPharmacyId();
@@ -23,6 +27,30 @@ export class ProductService {
     }
     return this.http
       .get<ApiResponse<PagedResponse<Product>>>(`${this.apiUrl}/page`, { params })
+      .pipe(map((response) => response.data));
+  }
+
+  getProduct(id: number): Observable<Product> {
+    return this.http
+      .get<ApiResponse<Product>>(`${this.apiUrl}/${id}`, { params: this.pharmacyIdParam() })
+      .pipe(map((response) => response.data));
+  }
+
+  createProduct(request: ProductRequest): Observable<Product> {
+    return this.http
+      .post<ApiResponse<Product>>(this.apiUrl, request, { params: this.pharmacyIdParam() })
+      .pipe(map((response) => response.data));
+  }
+
+  updateProduct(id: number, request: ProductRequest): Observable<Product> {
+    return this.http
+      .put<ApiResponse<Product>>(`${this.apiUrl}/${id}`, request, { params: this.pharmacyIdParam() })
+      .pipe(map((response) => response.data));
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http
+      .delete<ApiResponse<void>>(`${this.apiUrl}/${id}`, { params: this.pharmacyIdParam() })
       .pipe(map((response) => response.data));
   }
 

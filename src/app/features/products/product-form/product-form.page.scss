@@ -1,0 +1,23 @@
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.form-wrapper {
+  padding: 12px 4px 32px;
+}
+
+.section-title {
+  margin: 20px 16px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ion-color-medium);
+}
+
+.save-wrapper {
+  padding: 20px 16px 0;
+}

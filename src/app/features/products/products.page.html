@@ -24,7 +24,7 @@
   } @else {
     <ion-list class="product-list">
       @for (product of products(); track product.id) {
-        <ion-item>
+        <ion-item [button]="canManage" (click)="canManage && editProduct(product)">
           <div class="product-avatar" slot="start">{{ product.name.charAt(0) }}</div>
           <ion-label>
             <h2>{{ product.name }}</h2>
@@ -36,6 +36,11 @@
           <ion-badge slot="end" [color]="stockColor(product)">
             {{ product.totalStock }}
           </ion-badge>
+          @if (canDelete) {
+            <ion-button slot="end" fill="clear" size="small" color="danger" (click)="$event.stopPropagation(); deleteProduct(product)">
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          }
         </ion-item>
       }
     </ion-list>
@@ -46,8 +51,18 @@
   }
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="onScanBarcode()" color="primary">
+    <ion-fab-button color="primary">
       <ion-icon name="scan-outline"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+      @if (canManage) {
+        <ion-fab-button color="secondary" (click)="addProduct()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+      }
+      <ion-fab-button color="secondary" (click)="onScanBarcode()">
+        <ion-icon name="scan-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

@@ -1,6 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import {
   IonHeader,
@@ -16,14 +17,18 @@ import {
   IonInfiniteScrollContent,
   IonFab,
   IonFabButton,
+  IonFabList,
   IonIcon,
   IonBadge,
+  IonButton,
+  AlertController,
   ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { scanOutline, cubeOutline } from 'ionicons/icons';
+import { scanOutline, cubeOutline, addOutline, createOutline, trashOutline } from 'ionicons/icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../core/services/product.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Product } from '../../core/models/product.model';
 
 @Component({
@@ -48,12 +53,17 @@ import { Product } from '../../core/models/product.model';
     IonInfiniteScrollContent,
     IonFab,
     IonFabButton,
+    IonFabList,
     IonIcon,
     IonBadge,
+    IonButton,
   ],
 })
 export class ProductsPage implements OnInit {
   private readonly productService = inject(ProductService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly alertController = inject(AlertController);
   private readonly toastController = inject(ToastController);
   private readonly translate = inject(TranslateService);
 
@@ -63,11 +73,13 @@ export class ProductsPage implements OnInit {
   readonly page = signal(0);
   readonly hasMore = signal(true);
   readonly pageSize = 20;
+  readonly canManage = this.authService.hasRole('ADMIN', 'PHARMACIST');
+  readonly canDelete = this.authService.hasRole('ADMIN');
 
   private searchDebounceTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    addIcons({ scanOutline, cubeOutline });
+    addIcons({ scanOutline, cubeOutline, addOutline, createOutline, trashOutline });
   }
 
   ngOnInit(): void {
@@ -150,6 +162,37 @@ export class ProductsPage implements OnInit {
     } catch (error) {
       this.showToast(this.translate.instant('products.scanError'));
     }
+  }
+
+  addProduct(): void {
+    this.router.navigate(['/tabs/products/new']);
+  }
+
+  editProduct(product: Product): void {
+    this.router.navigate(['/tabs/products', product.id, 'edit']);
+  }
+
+  async deleteProduct(product: Product): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('products.deleteConfirmTitle'),
+      message: this.translate.instant('products.deleteConfirmMessage', { name: product.name }),
+      buttons: [
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
+        {
+          text: this.translate.instant('common.delete'),
+          role: 'destructive',
+          handler: () => {
+            this.productService.deleteProduct(product.id).subscribe({
+              next: () => {
+                this.products.update((list) => list.filter((p) => p.id !== product.id));
+              },
+              error: () => this.showToast(this.translate.instant('products.deleteFailed')),
+            });
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   private async showToast(message: string): Promise<void> {

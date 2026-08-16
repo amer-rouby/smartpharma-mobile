@@ -1,0 +1,138 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/products"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (isEdit ? 'products.editTitle' : 'products.addTitle') | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-wrapper">
+      <h2 class="section-title">{{ 'products.sectionBasic' | translate }}</h2>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.name' | translate }} *</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.scientificName' | translate }}</ion-label>
+        <ion-input formControlName="scientificName" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.barcode' | translate }}</ion-label>
+        <ion-input formControlName="barcode" type="text"></ion-input>
+        <ion-button slot="end" fill="clear" (click)="regenerateBarcode()">
+          <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{ 'products.category' | translate }}</ion-label>
+        <ion-select formControlName="category" interface="action-sheet">
+          <ion-select-option value="">{{ 'products.noCategory' | translate }}</ion-select-option>
+          @for (category of categories(); track category.id) {
+            <ion-select-option [value]="category.name">{{ category.name }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{ 'products.unitType' | translate }}</ion-label>
+        <ion-select formControlName="unitType" interface="action-sheet">
+          @for (unit of unitTypes; track unit) {
+            <ion-select-option [value]="unit">{{ ('products.units.' + unit) | translate }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-toggle formControlName="prescriptionRequired">{{ 'products.prescriptionRequired' | translate }}</ion-toggle>
+      </ion-item>
+
+      <h2 class="section-title">{{ 'products.sectionPricing' | translate }}</h2>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.sellPrice' | translate }} *</ion-label>
+        <ion-input formControlName="sellPrice" type="number" min="0.01" step="0.01"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.buyPrice' | translate }}</ion-label>
+        <ion-input formControlName="buyPrice" type="number" min="0" step="0.01"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.minStockLevel' | translate }}</ion-label>
+        <ion-input formControlName="minStockLevel" type="number" min="0"></ion-input>
+      </ion-item>
+
+      @if (!isEdit) {
+        <h2 class="section-title">{{ 'products.sectionInitialStock' | translate }}</h2>
+
+        <ion-item>
+          <ion-label position="stacked">{{ 'products.initialStock' | translate }}</ion-label>
+          <ion-input formControlName="initialStock" type="number" min="0"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">{{ 'products.expiryDate' | translate }}</ion-label>
+          <ion-input formControlName="expiryDate" type="date"></ion-input>
+        </ion-item>
+      }
+
+      <h2 class="section-title">{{ 'products.sectionExtra' | translate }}</h2>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.manufacturer' | translate }}</ion-label>
+        <ion-input formControlName="manufacturer" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.activeIngredients' | translate }}</ion-label>
+        <ion-input formControlName="activeIngredients" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.description' | translate }}</ion-label>
+        <ion-textarea formControlName="description" [autoGrow]="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.usageInstructions' | translate }}</ion-label>
+        <ion-textarea formControlName="usageInstructions" [autoGrow]="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.storageConditions' | translate }}</ion-label>
+        <ion-textarea formControlName="storageConditions" [autoGrow]="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">{{ 'products.drugInteractionWarning' | translate }}</ion-label>
+        <ion-textarea formControlName="drugInteractionWarning" [autoGrow]="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-toggle formControlName="isControlledSubstance">{{ 'products.isControlledSubstance' | translate }}</ion-toggle>
+      </ion-item>
+
+      <div class="save-wrapper">
+        <ion-button expand="block" type="submit" [disabled]="saving()">
+          @if (saving()) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            {{ 'common.save' | translate }}
+          }
+        </ion-button>
+      </div>
+    </form>
+  }
+</ion-content>

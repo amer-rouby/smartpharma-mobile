@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'smartpharma-mobile',
+  appId: 'com.smartpharma.mobile',
+  appName: 'صيدليتي الذكية',
   webDir: 'www'
 };
 
