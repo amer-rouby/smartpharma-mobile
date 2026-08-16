@@ -133,6 +133,7 @@
     "account": "My Account",
     "administration": "Administration",
     "systemSettings": "System Settings",
+    "users": "User Management",
     "preferences": "Preferences",
     "language": "Language",
     "theme": "Theme",
@@ -154,6 +155,28 @@
     "deleteConfirmTitle": "Delete Category",
     "deleteConfirmMessage": "Delete \"{{name}}\"?",
     "deleteFailed": "Failed to delete category"
+  },
+  "users": {
+    "title": "User Management",
+    "searchPlaceholder": "Search users...",
+    "emptyState": "No users",
+    "addTitle": "Add User",
+    "editTitle": "Edit User",
+    "username": "Username",
+    "password": "Password",
+    "passwordEditHint": "(leave blank to keep unchanged)",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "roleLabel": "Role",
+    "active": "Active",
+    "saveFailed": "Failed to save user",
+    "role": {
+      "ADMIN": "Admin",
+      "PHARMACIST": "Pharmacist",
+      "MANAGER": "Manager",
+      "VIEWER": "Viewer"
+    }
   },
   "systemSettings": {
     "title": "System Settings",

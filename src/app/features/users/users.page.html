@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ 'users.title' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [placeholder]="'users.searchPlaceholder' | translate"
+      [debounce]="0"
+      (ionInput)="searchTerm.set($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (filteredUsers().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="person-outline"></ion-icon>
+      <p>{{ 'users.emptyState' | translate }}</p>
+    </div>
+  } @else {
+    <ion-list class="user-list">
+      @for (user of filteredUsers(); track user.id) {
+        <ion-item button (click)="openUser(user)" detail="true">
+          <div class="user-avatar" slot="start">{{ user.fullName.charAt(0) }}</div>
+          <ion-label>
+            <h2>{{ user.fullName }}</h2>
+            <p>{{ user.username }}</p>
+          </ion-label>
+          <ion-badge slot="end" [color]="user.isActive ? 'success' : 'medium'">
+            {{ ('users.role.' + user.role) | translate }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUser()" color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

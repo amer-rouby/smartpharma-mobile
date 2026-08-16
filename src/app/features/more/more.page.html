@@ -73,6 +73,11 @@
         <ion-label>{{ 'more.systemSettings' | translate }}</ion-label>
         <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
       </ion-item>
+      <ion-item button (click)="goTo('/tabs/users')">
+        <div class="menu-icon" slot="start"><ion-icon name="people-outline"></ion-icon></div>
+        <ion-label>{{ 'more.users' | translate }}</ion-label>
+        <ion-icon name="chevron-back-outline" slot="end" class="chevron"></ion-icon>
+      </ion-item>
     </ion-list>
   }
 

@@ -120,6 +120,18 @@ export const routes: Routes = [
           import('../features/system-settings/system-settings.page').then((m) => m.SystemSettingsPage),
       },
       {
+        path: 'users',
+        loadComponent: () => import('../features/users/users.page').then((m) => m.UsersPage),
+      },
+      {
+        path: 'users/new',
+        loadComponent: () => import('../features/users/user-form/user-form.page').then((m) => m.UserFormPage),
+      },
+      {
+        path: 'users/:id/edit',
+        loadComponent: () => import('../features/users/user-form/user-form.page').then((m) => m.UserFormPage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full',

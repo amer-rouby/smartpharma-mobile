@@ -133,6 +133,7 @@
     "account": "حسابي",
     "administration": "الإدارة",
     "systemSettings": "إعدادات النظام",
+    "users": "إدارة المستخدمين",
     "preferences": "التفضيلات",
     "language": "اللغة",
     "theme": "المظهر",
@@ -154,6 +155,28 @@
     "deleteConfirmTitle": "حذف التصنيف",
     "deleteConfirmMessage": "هل تريد حذف \"{{name}}\"؟",
     "deleteFailed": "فشل حذف التصنيف"
+  },
+  "users": {
+    "title": "إدارة المستخدمين",
+    "searchPlaceholder": "ابحث عن مستخدم...",
+    "emptyState": "مفيش مستخدمين",
+    "addTitle": "إضافة مستخدم",
+    "editTitle": "تعديل مستخدم",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "passwordEditHint": "(سيبها فاضية لو مش هتغيرها)",
+    "fullName": "الاسم بالكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "التليفون",
+    "roleLabel": "الصلاحية",
+    "active": "مفعّل",
+    "saveFailed": "فشل حفظ المستخدم",
+    "role": {
+      "ADMIN": "مدير",
+      "PHARMACIST": "صيدلي",
+      "MANAGER": "مشرف",
+      "VIEWER": "مشاهد"
+    }
   },
   "systemSettings": {
     "title": "إعدادات النظام",
