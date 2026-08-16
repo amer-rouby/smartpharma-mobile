@@ -5,13 +5,14 @@ import { homeOutline, cartOutline, cubeOutline, alertCircleOutline, menuOutline 
 import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, startWith, switchMap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from '../core/services/notification.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge],
+  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge, TranslateModule],
 })
 export class TabsPage {
   private readonly notificationService = inject(NotificationService);

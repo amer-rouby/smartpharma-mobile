@@ -10,7 +10,7 @@
   </ion-refresher>
 
   <div class="greeting">
-    <p>مرحبًا،</p>
+    <p>{{ 'dashboard.greeting' | translate }}</p>
     <h2>{{ userName() }}</h2>
   </div>
 
@@ -23,43 +23,43 @@
       <div class="stat-card highlight">
         <ion-icon name="cash-outline"></ion-icon>
         <div class="stat-value">{{ s.todayRevenue | number: '1.0-0' }}</div>
-        <div class="stat-label">مبيعات اليوم</div>
+        <div class="stat-label">{{ 'dashboard.todayRevenue' | translate }}</div>
       </div>
 
       <div class="stat-card">
         <ion-icon name="receipt-outline"></ion-icon>
         <div class="stat-value">{{ s.todayOrders }}</div>
-        <div class="stat-label">عدد الفواتير</div>
+        <div class="stat-label">{{ 'dashboard.todayOrders' | translate }}</div>
       </div>
 
       <div class="stat-card">
         <ion-icon name="cube-outline"></ion-icon>
         <div class="stat-value">{{ s.totalProducts }}</div>
-        <div class="stat-label">إجمالي المنتجات</div>
+        <div class="stat-label">{{ 'dashboard.totalProducts' | translate }}</div>
       </div>
 
       <div class="stat-card warn">
         <ion-icon name="warning-outline"></ion-icon>
         <div class="stat-value">{{ s.lowStockProducts }}</div>
-        <div class="stat-label">مخزون منخفض</div>
+        <div class="stat-label">{{ 'dashboard.lowStock' | translate }}</div>
       </div>
 
       <div class="stat-card danger">
         <ion-icon name="alert-circle-outline"></ion-icon>
         <div class="stat-value">{{ s.outOfStockProducts }}</div>
-        <div class="stat-label">نفاد المخزون</div>
+        <div class="stat-label">{{ 'dashboard.outOfStock' | translate }}</div>
       </div>
 
       <div class="stat-card warn">
         <ion-icon name="time-outline"></ion-icon>
         <div class="stat-value">{{ s.expiringBatches }}</div>
-        <div class="stat-label">قريبة الانتهاء</div>
+        <div class="stat-label">{{ 'dashboard.expiringSoon' | translate }}</div>
       </div>
     </div>
 
     @if (s.recentSales.length) {
       <div class="section">
-        <h3>آخر المبيعات</h3>
+        <h3>{{ 'dashboard.recentSales' | translate }}</h3>
         <div class="list-card">
           @for (sale of s.recentSales; track sale.id ?? $index) {
             <div class="list-row">

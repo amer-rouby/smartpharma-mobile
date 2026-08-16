@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>طلبات الشراء</ion-title>
+    <ion-title>{{ 'purchases.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
   } @else if (orders().length === 0) {
     <div class="empty-state">
       <ion-icon name="receipt-outline"></ion-icon>
-      <p>مفيش طلبات شراء</p>
+      <p>{{ 'purchases.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="order-list">
@@ -24,10 +24,10 @@
           <ion-label>
             <h2>{{ order.orderNumber }}</h2>
             <p>{{ order.supplierName }}</p>
-            <p class="price">{{ order.totalAmount | number: '1.0-2' }} ج.م</p>
+            <p class="price">{{ order.totalAmount | number: '1.0-2' }} {{ 'common.currency' | translate }}</p>
           </ion-label>
           <ion-badge slot="end" [color]="statusColors[order.status]">
-            {{ statusLabels[order.status] }}
+            {{ statusLabelKeys[order.status] | translate }}
           </ion-badge>
         </ion-item>
       }

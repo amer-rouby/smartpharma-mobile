@@ -23,11 +23,12 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { scanOutline, addOutline, removeOutline, trashOutline, cartOutline } from 'ionicons/icons';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../core/services/product.service';
 import { SaleService } from '../../core/services/sale.service';
 import { PharmacySettingsService } from '../../core/services/pharmacy-settings.service';
 import { Product } from '../../core/models/product.model';
-import { ALL_PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from '../../core/models/sale.model';
+import { ALL_PAYMENT_METHODS, PAYMENT_METHOD_KEYS } from '../../core/models/sale.model';
 
 interface CartLine {
   product: Product;
@@ -58,6 +59,7 @@ interface CartLine {
     IonSelectOption,
     IonInput,
     IonFooter,
+    TranslateModule,
   ],
 })
 export class PosPage implements OnInit {
@@ -65,6 +67,7 @@ export class PosPage implements OnInit {
   private readonly saleService = inject(SaleService);
   private readonly pharmacySettingsService = inject(PharmacySettingsService);
   private readonly toastController = inject(ToastController);
+  private readonly translate = inject(TranslateService);
 
   readonly searchTerm = signal('');
   readonly searchResults = signal<Product[]>([]);
@@ -75,7 +78,7 @@ export class PosPage implements OnInit {
   readonly submitting = signal(false);
   readonly enabledPaymentMethods = signal<string[]>(ALL_PAYMENT_METHODS);
 
-  readonly paymentMethodLabels = PAYMENT_METHOD_LABELS;
+  readonly paymentMethodKeys = PAYMENT_METHOD_KEYS;
 
   readonly subtotal = computed(() =>
     this.cart().reduce((sum, line) => sum + line.product.sellPrice * line.quantity, 0)
@@ -127,7 +130,7 @@ export class PosPage implements OnInit {
 
   addToCart(product: Product): void {
     if (product.totalStock <= 0) {
-      this.showToast(`المنتج "${product.name}" نفد من المخزون`);
+      this.showToast(this.translate.instant('pos.outOfStockProduct', { name: product.name }));
       return;
     }
     const existing = this.cart().find((line) => line.product.id === product.id);
@@ -145,7 +148,7 @@ export class PosPage implements OnInit {
       lines.map((line) => {
         if (line.product.id !== productId) return line;
         if (line.quantity >= line.product.totalStock) {
-          this.showToast('الكمية وصلت للحد الأقصى المتاح بالمخزون');
+          this.showToast(this.translate.instant('pos.maxQuantity'));
           return line;
         }
         return { ...line, quantity: line.quantity + 1 };
@@ -167,14 +170,14 @@ export class PosPage implements OnInit {
 
   async onScanBarcode(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      this.showToast('المسح بالكاميرا متاح فقط داخل تطبيق الموبايل');
+      this.showToast(this.translate.instant('pos.scanUnavailable'));
       return;
     }
     try {
       const { BarcodeScanner } = await import('@capacitor-mlkit/barcode-scanning');
       const { camera } = await BarcodeScanner.requestPermissions();
       if (camera !== 'granted' && camera !== 'limited') {
-        this.showToast('محتاجين إذن الكاميرا عشان نقدر نمسح الباركود');
+        this.showToast(this.translate.instant('pos.cameraPermission'));
         return;
       }
       const { barcodes } = await BarcodeScanner.scan();
@@ -186,23 +189,23 @@ export class PosPage implements OnInit {
           if (product) {
             this.addToCart(product);
           } else {
-            this.showToast('مفيش منتج بالباركود ده');
+            this.showToast(this.translate.instant('pos.noProductForBarcode'));
           }
         },
       });
     } catch {
-      this.showToast('حصل خطأ أثناء المسح');
+      this.showToast(this.translate.instant('pos.scanError'));
     }
   }
 
   onSubmit(): void {
     if (this.cart().length === 0) {
-      this.showToast('السلة فارغة');
+      this.showToast(this.translate.instant('pos.cartEmpty'));
       return;
     }
     const prescriptionRequired = this.cart().some((line) => line.product.prescriptionRequired);
     if (prescriptionRequired) {
-      this.showToast('يوجد منتج يتطلب وصفة طبية - رفع الوصفة غير مدعوم حاليًا في تطبيق الموبايل');
+      this.showToast(this.translate.instant('pos.prescriptionRequired'));
       return;
     }
 
@@ -222,13 +225,13 @@ export class PosPage implements OnInit {
       .subscribe({
         next: (sale) => {
           this.submitting.set(false);
-          this.showToast(`تمت عملية البيع بنجاح - فاتورة ${sale.invoiceNumber}`);
+          this.showToast(this.translate.instant('pos.saleSuccess', { invoice: sale.invoiceNumber }));
           this.cart.set([]);
           this.discount.set(0);
         },
         error: (err) => {
           this.submitting.set(false);
-          this.showToast(err?.error?.message || 'فشلت عملية البيع');
+          this.showToast(err?.error?.message || this.translate.instant('pos.saleFailed'));
         },
       });
   }

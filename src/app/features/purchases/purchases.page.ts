@@ -17,8 +17,9 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { receiptOutline, cartOutline } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 import { PurchaseOrderService } from '../../core/services/purchase-order.service';
-import { PurchaseOrder, STATUS_COLORS, STATUS_LABELS } from '../../core/models/purchase-order.model';
+import { PurchaseOrder, STATUS_COLORS, STATUS_LABEL_KEYS } from '../../core/models/purchase-order.model';
 
 @Component({
   selector: 'app-purchases',
@@ -39,6 +40,7 @@ import { PurchaseOrder, STATUS_COLORS, STATUS_LABELS } from '../../core/models/p
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     IonIcon,
+    TranslateModule,
   ],
 })
 export class PurchasesPage implements OnInit {
@@ -49,7 +51,7 @@ export class PurchasesPage implements OnInit {
   readonly loading = signal(true);
   readonly page = signal(0);
   readonly hasMore = signal(true);
-  readonly statusLabels = STATUS_LABELS;
+  readonly statusLabelKeys = STATUS_LABEL_KEYS;
   readonly statusColors = STATUS_COLORS;
 
   constructor() {

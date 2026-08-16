@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>إعدادات الإشعارات</ion-title>
+    <ion-title>{{ 'settings.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,37 +12,37 @@
   } @else if (settings(); as s) {
     <ion-list inset="true">
       <ion-item>
-        <ion-toggle [(ngModel)]="s.emailNotifications">البريد الإلكتروني</ion-toggle>
+        <ion-toggle [(ngModel)]="s.emailNotifications">{{ 'settings.email' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.pushNotifications">الإشعارات الفورية</ion-toggle>
+        <ion-toggle [(ngModel)]="s.pushNotifications">{{ 'settings.push' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.soundEnabled">الصوت</ion-toggle>
+        <ion-toggle [(ngModel)]="s.soundEnabled">{{ 'settings.sound' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.vibrationEnabled">الاهتزاز</ion-toggle>
+        <ion-toggle [(ngModel)]="s.vibrationEnabled">{{ 'settings.vibration' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label>لغة البريد الإلكتروني</ion-label>
+        <ion-label>{{ 'settings.emailLanguage' | translate }}</ion-label>
         <ion-select [(ngModel)]="s.preferredLanguage" interface="action-sheet">
-          <ion-select-option value="ar">العربية</ion-select-option>
-          <ion-select-option value="en">English</ion-select-option>
+          <ion-select-option value="ar">{{ 'settings.arabic' | translate }}</ion-select-option>
+          <ion-select-option value="en">{{ 'settings.english' | translate }}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
 
     <ion-list inset="true">
       <ion-item>
-        <ion-toggle [(ngModel)]="s.quietHoursEnabled">ساعات الهدوء</ion-toggle>
+        <ion-toggle [(ngModel)]="s.quietHoursEnabled">{{ 'settings.quietHours' | translate }}</ion-toggle>
       </ion-item>
       @if (s.quietHoursEnabled) {
         <ion-item>
-          <ion-label position="stacked">من</ion-label>
+          <ion-label position="stacked">{{ 'settings.quietHoursFrom' | translate }}</ion-label>
           <ion-input type="time" [(ngModel)]="s.quietHoursStart"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">إلى</ion-label>
+          <ion-label position="stacked">{{ 'settings.quietHoursTo' | translate }}</ion-label>
           <ion-input type="time" [(ngModel)]="s.quietHoursEnd"></ion-input>
         </ion-item>
       }
@@ -50,40 +50,40 @@
 
     <ion-list inset="true">
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyLowStock">مخزون منخفض</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyLowStock">{{ 'settings.notifyLowStock' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyOutOfStock">نفاد المخزون</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyOutOfStock">{{ 'settings.notifyOutOfStock' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyExpiryWarning">صلاحية قريبة</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyExpiryWarning">{{ 'settings.notifyExpiryWarning' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyExpiredProducts">منتجات منتهية</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyExpiredProducts">{{ 'settings.notifyExpiredProducts' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyNewSale">عملية بيع جديدة</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyNewSale">{{ 'settings.notifyNewSale' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyLargeSale">عملية بيع كبيرة</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyLargeSale">{{ 'settings.notifyLargeSale' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyNewExpense">مصروف جديد</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyNewExpense">{{ 'settings.notifyNewExpense' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyLargeExpense">مصروف كبير</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyLargeExpense">{{ 'settings.notifyLargeExpense' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifyBackupReminder">تذكير النسخ الاحتياطي</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifyBackupReminder">{{ 'settings.notifyBackupReminder' | translate }}</ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-toggle [(ngModel)]="s.notifySecurityAlerts">تنبيهات أمنية</ion-toggle>
+        <ion-toggle [(ngModel)]="s.notifySecurityAlerts">{{ 'settings.notifySecurityAlerts' | translate }}</ion-toggle>
       </ion-item>
     </ion-list>
 
     <div class="save-wrapper">
       <ion-button expand="block" [disabled]="saving()" (click)="save()">
-        {{ saving() ? 'جارٍ الحفظ...' : 'حفظ' }}
+        {{ (saving() ? 'common.saving' : 'common.save') | translate }}
       </ion-button>
     </div>
   }

@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkDoneOutline, alertCircleOutline, warningOutline, timeOutline } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 import { StockAlertService } from '../../core/services/stock-alert.service';
 import { StockAlert } from '../../core/models/stock-alert.model';
 
@@ -26,6 +27,7 @@ import { StockAlert } from '../../core/models/stock-alert.model';
   styleUrls: ['./stock.page.scss'],
   imports: [
     CommonModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonTitle,

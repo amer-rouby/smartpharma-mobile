@@ -14,8 +14,9 @@ import {
   IonBadge,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 import { PurchaseOrderService } from '../../../core/services/purchase-order.service';
-import { PurchaseOrder, STATUS_COLORS, STATUS_LABELS } from '../../../core/models/purchase-order.model';
+import { PurchaseOrder, STATUS_COLORS, STATUS_LABEL_KEYS } from '../../../core/models/purchase-order.model';
 
 @Component({
   selector: 'app-purchase-detail',
@@ -35,6 +36,7 @@ import { PurchaseOrder, STATUS_COLORS, STATUS_LABELS } from '../../../core/model
     IonLabel,
     IonBadge,
     IonSpinner,
+    TranslateModule,
   ],
 })
 export class PurchaseDetailPage implements OnInit {
@@ -43,7 +45,7 @@ export class PurchaseDetailPage implements OnInit {
 
   readonly order = signal<PurchaseOrder | null>(null);
   readonly loading = signal(true);
-  readonly statusLabels = STATUS_LABELS;
+  readonly statusLabelKeys = STATUS_LABEL_KEYS;
   readonly statusColors = STATUS_COLORS;
 
   ngOnInit(): void {

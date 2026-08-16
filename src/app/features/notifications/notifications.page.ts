@@ -27,6 +27,7 @@ import {
   shieldOutline,
   informationCircleOutline,
 } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { NotificationModel } from '../../core/models/notification.model';
 
@@ -64,6 +65,7 @@ const TYPE_ICONS: Record<string, string> = {
     IonSpinner,
     IonRefresher,
     IonRefresherContent,
+    TranslateModule,
   ],
 })
 export class NotificationsPage implements OnInit {

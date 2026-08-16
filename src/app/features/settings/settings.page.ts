@@ -17,6 +17,7 @@ import {
   IonSpinner,
   ToastController,
 } from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationSettingsService } from '../../core/services/notification-settings.service';
 import { NotificationSettings } from '../../core/models/notification-settings.model';
 
@@ -28,6 +29,7 @@ import { NotificationSettings } from '../../core/models/notification-settings.mo
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -46,6 +48,7 @@ import { NotificationSettings } from '../../core/models/notification-settings.mo
 export class SettingsPage implements OnInit {
   private readonly notificationSettingsService = inject(NotificationSettingsService);
   private readonly toastController = inject(ToastController);
+  private readonly translate = inject(TranslateService);
 
   readonly settings = signal<NotificationSettings | null>(null);
   readonly loading = signal(true);
@@ -70,11 +73,11 @@ export class SettingsPage implements OnInit {
       next: (updated) => {
         this.settings.set(updated);
         this.saving.set(false);
-        this.showToast('تم حفظ الإعدادات بنجاح');
+        this.showToast(this.translate.instant('settings.saveSuccess'));
       },
       error: () => {
         this.saving.set(false);
-        this.showToast('فشل حفظ الإعدادات');
+        this.showToast(this.translate.instant('settings.saveFailed'));
       },
     });
   }

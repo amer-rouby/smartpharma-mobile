@@ -2,8 +2,8 @@
   <div class="login-wrapper">
     <div class="brand">
       <div class="brand-logo">💊</div>
-      <h1>صيدليتي الذكية</h1>
-      <p>نظام إدارة الصيدليات</p>
+      <h1>{{ 'common.appName' | translate }}</h1>
+      <p>{{ 'common.appTagline' | translate }}</p>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
@@ -12,7 +12,7 @@
         <ion-input
           formControlName="username"
           type="text"
-          placeholder="اسم المستخدم"
+          [placeholder]="'login.username' | translate"
           autocomplete="username"
         ></ion-input>
       </ion-item>
@@ -22,7 +22,7 @@
         <ion-input
           formControlName="password"
           [type]="showPassword() ? 'text' : 'password'"
-          placeholder="كلمة المرور"
+          [placeholder]="'login.password' | translate"
           autocomplete="current-password"
         ></ion-input>
         <ion-icon
@@ -43,9 +43,13 @@
         @if (loading()) {
           <ion-spinner name="dots"></ion-spinner>
         } @else {
-          تسجيل الدخول
+          {{ 'login.submit' | translate }}
         }
       </ion-button>
     </form>
+
+    <button class="lang-toggle" type="button" (click)="languageService.toggleLanguage()">
+      {{ languageService.getCurrentLanguage() === 'ar' ? 'English' : 'العربية' }}
+    </button>
   </div>
 </ion-content>

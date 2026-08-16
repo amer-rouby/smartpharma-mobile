@@ -15,6 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personCircleOutline, businessOutline, shieldCheckmarkOutline, logOutOutline } from 'ionicons/icons';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -24,6 +25,7 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./profile.page.scss'],
   imports: [
     CommonModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -39,6 +41,7 @@ export class ProfilePage {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
+  private readonly translate = inject(TranslateService);
 
   readonly user = this.authService.getCurrentUser();
 
@@ -48,12 +51,12 @@ export class ProfilePage {
 
   async onLogout(): Promise<void> {
     const alert = await this.alertController.create({
-      header: 'تسجيل الخروج',
-      message: 'هل تريد تسجيل الخروج من الحساب؟',
+      header: this.translate.instant('profile.logoutConfirmTitle'),
+      message: this.translate.instant('profile.logoutConfirmMessage'),
       buttons: [
-        { text: 'إلغاء', role: 'cancel' },
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
         {
-          text: 'خروج',
+          text: this.translate.instant('profile.logout'),
           role: 'destructive',
           handler: () => {
             this.authService.logout().subscribe(() => {

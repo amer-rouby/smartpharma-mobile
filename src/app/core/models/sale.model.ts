@@ -24,14 +24,14 @@ export interface SaleResponse {
   transactionDate: string;
 }
 
-export const PAYMENT_METHOD_LABELS: Record<string, string> = {
-  CASH: 'نقدي',
-  VISA: 'فيزا',
-  MASTERCARD: 'ماستركارد',
-  INSTAPAY: 'إنستا باي',
-  FAWRY: 'فوري',
-  WALLET: 'محفظة إلكترونية',
-  BANK_TRANSFER: 'تحويل بنكي',
+export const PAYMENT_METHOD_KEYS: Record<string, string> = {
+  CASH: 'payment.CASH',
+  VISA: 'payment.VISA',
+  MASTERCARD: 'payment.MASTERCARD',
+  INSTAPAY: 'payment.INSTAPAY',
+  FAWRY: 'payment.FAWRY',
+  WALLET: 'payment.WALLET',
+  BANK_TRANSFER: 'payment.BANK_TRANSFER',
 };
 
-export const ALL_PAYMENT_METHODS = Object.keys(PAYMENT_METHOD_LABELS);
+export const ALL_PAYMENT_METHODS = Object.keys(PAYMENT_METHOD_KEYS);

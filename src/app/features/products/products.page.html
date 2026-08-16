@@ -1,10 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>المنتجات</ion-title>
+    <ion-title>{{ 'products.title' | translate }}</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      placeholder="ابحث بالاسم أو الباركود..."
+      [placeholder]="'products.searchPlaceholder' | translate"
       [debounce]="0"
       (ionInput)="onSearchChange($any($event.target).value)"
     ></ion-searchbar>
@@ -19,7 +19,7 @@
   } @else if (products().length === 0) {
     <div class="empty-state">
       <ion-icon name="cube-outline"></ion-icon>
-      <p>مفيش منتجات تطابق البحث</p>
+      <p>{{ 'products.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="product-list">
@@ -31,7 +31,7 @@
             @if (product.scientificName) {
               <p>{{ product.scientificName }}</p>
             }
-            <p class="price">{{ product.sellPrice | number: '1.0-2' }} ج.م</p>
+            <p class="price">{{ product.sellPrice | number: '1.0-2' }} {{ 'common.currency' | translate }}</p>
           </ion-label>
           <ion-badge slot="end" [color]="stockColor(product)">
             {{ product.totalStock }}

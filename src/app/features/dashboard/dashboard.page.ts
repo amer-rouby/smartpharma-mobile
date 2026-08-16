@@ -19,6 +19,7 @@ import {
   alertCircleOutline,
   timeOutline,
 } from 'ionicons/icons';
+import { TranslateModule } from '@ngx-translate/core';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { AuthService } from '../../core/services/auth.service';
 import { DashboardStats } from '../../core/models/dashboard.model';
@@ -30,6 +31,7 @@ import { DashboardStats } from '../../core/models/dashboard.model';
   styleUrls: ['./dashboard.page.scss'],
   imports: [
     CommonModule,
+    TranslateModule,
     IonHeader,
     IonToolbar,
     IonTitle,
