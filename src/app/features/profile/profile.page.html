@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>حسابي</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="profile-header">
+    <ion-icon name="person-circle-outline"></ion-icon>
+    <h2>{{ user?.fullName }}</h2>
+    <p>{{ user?.username }}</p>
+  </div>
+
+  <ion-list inset="true">
+    <ion-item>
+      <ion-icon name="business-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h3>الصيدلية</h3>
+        <p>{{ user?.pharmacyName }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h3>الصلاحية</h3>
+        <p>{{ user?.role }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="logout-wrapper">
+    <ion-button expand="block" color="danger" fill="outline" (click)="onLogout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      تسجيل الخروج
+    </ion-button>
+  </div>
+</ion-content>

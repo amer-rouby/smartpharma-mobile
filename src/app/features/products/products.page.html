@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>المنتجات</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="ابحث بالاسم أو الباركود..."
+      [debounce]="0"
+      (ionInput)="onSearchChange($any($event.target).value)"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (products().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="cube-outline"></ion-icon>
+      <p>مفيش منتجات تطابق البحث</p>
+    </div>
+  } @else {
+    <ion-list>
+      @for (product of products(); track product.id) {
+        <ion-item>
+          <ion-label>
+            <h2>{{ product.name }}</h2>
+            @if (product.scientificName) {
+              <p>{{ product.scientificName }}</p>
+            }
+            <p>{{ product.sellPrice | number: '1.0-2' }} ج.م</p>
+          </ion-label>
+          <ion-badge slot="end" [color]="stockColor(product)">
+            {{ product.totalStock }}
+          </ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+      <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onScanBarcode()" color="primary">
+      <ion-icon name="scan-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

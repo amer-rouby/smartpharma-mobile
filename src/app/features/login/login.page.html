@@ -1,0 +1,51 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <div class="login-wrapper">
+    <div class="brand">
+      <div class="brand-logo">💊</div>
+      <h1>صيدليتي الذكية</h1>
+      <p>نظام إدارة الصيدليات</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <ion-item class="input-item" lines="none">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          formControlName="username"
+          type="text"
+          placeholder="اسم المستخدم"
+          autocomplete="username"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item" lines="none">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          formControlName="password"
+          [type]="showPassword() ? 'text' : 'password'"
+          placeholder="كلمة المرور"
+          autocomplete="current-password"
+        ></ion-input>
+        <ion-icon
+          slot="end"
+          [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"
+          (click)="togglePasswordVisibility()"
+          class="toggle-visibility"
+        ></ion-icon>
+      </ion-item>
+
+      @if (errorMessage()) {
+        <ion-text color="danger" class="error-message">
+          <p>{{ errorMessage() }}</p>
+        </ion-text>
+      }
+
+      <ion-button expand="block" type="submit" [disabled]="loading()" class="login-button">
+        @if (loading()) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          تسجيل الدخول
+        }
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>الإشعارات</ion-title>
+    <ion-buttons slot="end">
+      @if (notifications().length > 0) {
+        <ion-button (click)="markAllAsRead()">تحديد الكل كمقروء</ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (notifications().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="notifications-off-outline"></ion-icon>
+      <p>مفيش إشعارات جديدة</p>
+    </div>
+  } @else {
+    <ion-list>
+      @for (notification of notifications(); track notification.id) {
+        <ion-item button (click)="markAsRead(notification)">
+          <ion-icon
+            slot="start"
+            [name]="iconFor(notification.type)"
+            [color]="priorityColor(notification.priority)"
+          ></ion-icon>
+          <ion-label class="ion-text-wrap">
+            <h2>{{ notification.title }}</h2>
+            <p>{{ notification.message }}</p>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

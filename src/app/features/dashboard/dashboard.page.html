@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{ pharmacyName() }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="dashboard-content">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="greeting">
+    <p>مرحبًا،</p>
+    <h2>{{ userName() }}</h2>
+  </div>
+
+  @if (loading() && !stats()) {
+    <div class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else if (stats(); as s) {
+    <div class="stats-grid">
+      <div class="stat-card highlight">
+        <ion-icon name="cash-outline"></ion-icon>
+        <div class="stat-value">{{ s.todayRevenue | number: '1.0-0' }}</div>
+        <div class="stat-label">مبيعات اليوم</div>
+      </div>
+
+      <div class="stat-card">
+        <ion-icon name="receipt-outline"></ion-icon>
+        <div class="stat-value">{{ s.todayOrders }}</div>
+        <div class="stat-label">عدد الفواتير</div>
+      </div>
+
+      <div class="stat-card">
+        <ion-icon name="cube-outline"></ion-icon>
+        <div class="stat-value">{{ s.totalProducts }}</div>
+        <div class="stat-label">إجمالي المنتجات</div>
+      </div>
+
+      <div class="stat-card warn">
+        <ion-icon name="warning-outline"></ion-icon>
+        <div class="stat-value">{{ s.lowStockProducts }}</div>
+        <div class="stat-label">مخزون منخفض</div>
+      </div>
+
+      <div class="stat-card danger">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <div class="stat-value">{{ s.outOfStockProducts }}</div>
+        <div class="stat-label">نفاد المخزون</div>
+      </div>
+
+      <div class="stat-card warn">
+        <ion-icon name="time-outline"></ion-icon>
+        <div class="stat-value">{{ s.expiringBatches }}</div>
+        <div class="stat-label">قريبة الانتهاء</div>
+      </div>
+    </div>
+
+    @if (s.recentSales.length) {
+      <div class="section">
+        <h3>آخر المبيعات</h3>
+        <div class="list-card">
+          @for (sale of s.recentSales; track sale.id ?? $index) {
+            <div class="list-row">
+              <span class="invoice">{{ sale.invoiceNumber }}</span>
+              <span class="amount">{{ sale.totalAmount | number: '1.0-0' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</ion-content>

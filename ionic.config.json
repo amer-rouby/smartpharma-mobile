@@ -1,0 +1,7 @@
+{
+  "name": "smartpharma-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
