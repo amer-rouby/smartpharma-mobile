@@ -99,8 +99,11 @@ export class PosPage implements OnInit {
     this.cart().reduce((sum, line) => sum + line.product.sellPrice * line.quantity, 0)
   );
   readonly total = computed(() => Math.max(0, this.subtotal() - this.discount()));
+  // Defaults to true (the historical, always-on behavior) until the real
+  // pharmacy setting loads, so checkout isn't briefly unguarded on first render.
+  readonly requirePrescriptionUpload = signal(true);
   readonly hasPrescriptionRequiredItem = computed(() =>
-    this.cart().some((line) => line.product.prescriptionRequired)
+    this.requirePrescriptionUpload() && this.cart().some((line) => line.product.prescriptionRequired)
   );
 
   private searchDebounceTimer?: ReturnType<typeof setTimeout>;
@@ -121,6 +124,7 @@ export class PosPage implements OnInit {
   ngOnInit(): void {
     this.pharmacySettingsService.getSettings().subscribe({
       next: (settings) => {
+        this.requirePrescriptionUpload.set(settings.requirePrescriptionUpload ?? true);
         const enabled = settings.enabledPaymentMethods
           ? settings.enabledPaymentMethods.split(',').map((m) => m.trim()).filter(Boolean)
           : ALL_PAYMENT_METHODS;

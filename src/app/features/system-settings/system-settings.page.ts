@@ -69,6 +69,7 @@ export class SystemSettingsPage implements OnInit {
     currency: ['EGP'],
     largeSaleThreshold: [5000],
     largeExpenseThreshold: [2000],
+    requirePrescriptionUpload: [true],
   });
 
   ngOnInit(): void {
@@ -111,6 +112,7 @@ export class SystemSettingsPage implements OnInit {
         currency: value.currency ?? 'EGP',
         largeSaleThreshold: value.largeSaleThreshold ?? 5000,
         largeExpenseThreshold: value.largeExpenseThreshold ?? 2000,
+        requirePrescriptionUpload: value.requirePrescriptionUpload ?? true,
         enabledPaymentMethods: Array.from(this.selectedPaymentMethods()).join(','),
       })
       .subscribe({

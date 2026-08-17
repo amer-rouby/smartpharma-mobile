@@ -277,6 +277,8 @@
     "currency": "Currency",
     "largeSaleThreshold": "Large Sale Threshold",
     "largeExpenseThreshold": "Large Expense Threshold",
+    "sales": "Sales",
+    "requirePrescriptionUpload": "Require a prescription photo before completing a sale",
     "paymentMethods": "Enabled Payment Methods",
     "saveSuccess": "Settings saved successfully",
     "saveFailed": "Failed to save settings"

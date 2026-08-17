@@ -277,6 +277,8 @@
     "currency": "العملة",
     "largeSaleThreshold": "حد عملية البيع الكبيرة",
     "largeExpenseThreshold": "حد المصروف الكبير",
+    "sales": "المبيعات",
+    "requirePrescriptionUpload": "إلزام رفع صورة الروشتة قبل إتمام عملية البيع",
     "paymentMethods": "طرق الدفع المفعّلة",
     "saveSuccess": "تم حفظ الإعدادات بنجاح",
     "saveFailed": "فشل حفظ الإعدادات"

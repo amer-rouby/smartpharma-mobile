@@ -50,6 +50,13 @@
         <ion-input formControlName="largeExpenseThreshold" type="number"></ion-input>
       </ion-item>
 
+      <ion-list-header class="section-header">{{ 'systemSettings.sales' | translate }}</ion-list-header>
+      <ion-item>
+        <ion-checkbox formControlName="requirePrescriptionUpload">
+          {{ 'systemSettings.requirePrescriptionUpload' | translate }}
+        </ion-checkbox>
+      </ion-item>
+
       <ion-list-header class="section-header">{{ 'systemSettings.paymentMethods' | translate }}</ion-list-header>
       @for (method of allPaymentMethods; track method) {
         <ion-item>

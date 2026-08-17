@@ -21,6 +21,7 @@ export interface PharmacySettings {
   enabledPaymentMethods?: string;
   largeSaleThreshold?: number;
   largeExpenseThreshold?: number;
+  requirePrescriptionUpload?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
