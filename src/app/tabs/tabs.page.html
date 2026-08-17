@@ -17,6 +17,9 @@
 
     <ion-tab-button tab="stock" href="/tabs/stock">
       <ion-icon aria-hidden="true" name="alert-circle-outline"></ion-icon>
+      @if (stockAlertCount() > 0) {
+        <ion-badge color="danger">{{ stockAlertCount() }}</ion-badge>
+      }
       <ion-label>{{ 'tabs.stock' | translate }}</ion-label>
     </ion-tab-button>
 

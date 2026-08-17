@@ -4,9 +4,10 @@ import { addIcons } from 'ionicons';
 import { homeOutline, cartOutline, cubeOutline, alertCircleOutline, menuOutline } from 'ionicons/icons';
 import { inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { interval, startWith, switchMap } from 'rxjs';
+import { interval, startWith, switchMap, map } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService } from '../core/services/notification.service';
+import { StockAlertService } from '../core/services/stock-alert.service';
 
 @Component({
   selector: 'app-tabs',
@@ -17,6 +18,7 @@ import { NotificationService } from '../core/services/notification.service';
 })
 export class TabsPage {
   private readonly notificationService = inject(NotificationService);
+  private readonly stockAlertService = inject(StockAlertService);
 
   // Polls every 60s rather than a live stream (SSE reconnect-on-resume is more
   // fiddly on mobile than on web), which is a fine trade-off for a badge count.
@@ -24,6 +26,15 @@ export class TabsPage {
     interval(60000).pipe(
       startWith(0),
       switchMap(() => this.notificationService.getUnreadCount())
+    ),
+    { initialValue: 0 }
+  );
+
+  readonly stockAlertCount = toSignal(
+    interval(60000).pipe(
+      startWith(0),
+      switchMap(() => this.stockAlertService.getActiveAlerts()),
+      map((alerts) => alerts.length)
     ),
     { initialValue: 0 }
   );
