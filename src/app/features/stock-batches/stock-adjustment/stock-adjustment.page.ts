@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,10 +17,10 @@ import {
   IonSelectOption,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StockBatchService } from '../../../core/services/stock-batch.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { StockBatch } from '../../../core/models/stock-batch.model';
 
 const ADJUSTMENT_TYPES = ['ADD', 'REMOVE', 'CORRECTION'] as const;
@@ -29,6 +29,7 @@ const ADJUSTMENT_REASONS = ['DAMAGED', 'EXPIRED', 'RETURNED', 'COUNT_ERROR', 'OT
 @Component({
   selector: 'app-stock-adjustment',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './stock-adjustment.page.html',
   styleUrls: ['./stock-adjustment.page.scss'],
   imports: [
@@ -56,7 +57,7 @@ export class StockAdjustmentPage {
   private readonly stockBatchService = inject(StockBatchService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -90,18 +91,13 @@ export class StockAdjustmentPage {
     this.stockBatchService.adjustStock(this.batchId, request).subscribe({
       next: () => {
         this.saving.set(false);
-        this.showToast(this.translate.instant('stockBatches.adjustSuccess'));
+        this.toastService.show(this.translate.instant('stockBatches.adjustSuccess'));
         this.router.navigate(['/tabs/stock-batches']);
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('stockBatches.adjustFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('stockBatches.adjustFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

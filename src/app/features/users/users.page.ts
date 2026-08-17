@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -25,6 +25,7 @@ import { StaffUser } from '../../core/models/user-management.model';
 @Component({
   selector: 'app-users',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
   imports: [

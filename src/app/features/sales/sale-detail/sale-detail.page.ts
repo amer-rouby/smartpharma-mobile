@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -23,6 +23,7 @@ import { SaleResponse } from '../../../core/models/sale.model';
 @Component({
   selector: 'app-sale-detail',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sale-detail.page.html',
   styleUrls: ['./sale-detail.page.scss'],
   imports: [

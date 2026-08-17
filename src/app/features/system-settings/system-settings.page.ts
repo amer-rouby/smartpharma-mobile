@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -15,10 +15,10 @@ import {
   IonButton,
   IonSpinner,
   IonListHeader,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PharmacySettingsService } from '../../core/services/pharmacy-settings.service';
+import { ToastService } from '../../core/services/toast.service';
 import { ALL_PAYMENT_METHODS, PAYMENT_METHOD_KEYS } from '../../core/models/sale.model';
 
 const CURRENCIES = ['EGP', 'USD', 'EUR', 'SAR', 'AED', 'KWD'];
@@ -26,6 +26,7 @@ const CURRENCIES = ['EGP', 'USD', 'EUR', 'SAR', 'AED', 'KWD'];
 @Component({
   selector: 'app-system-settings',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './system-settings.page.html',
   styleUrls: ['./system-settings.page.scss'],
   imports: [
@@ -50,7 +51,7 @@ const CURRENCIES = ['EGP', 'USD', 'EUR', 'SAR', 'AED', 'KWD'];
 export class SystemSettingsPage implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly settingsService = inject(PharmacySettingsService);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly loading = signal(true);
@@ -115,17 +116,12 @@ export class SystemSettingsPage implements OnInit {
       .subscribe({
         next: () => {
           this.saving.set(false);
-          this.showToast(this.translate.instant('systemSettings.saveSuccess'));
+          this.toastService.show(this.translate.instant('systemSettings.saveSuccess'));
         },
         error: (err) => {
           this.saving.set(false);
-          this.showToast(err?.error?.message || this.translate.instant('systemSettings.saveFailed'));
+          this.toastService.show(err?.error?.message || this.translate.instant('systemSettings.saveFailed'));
         },
       });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

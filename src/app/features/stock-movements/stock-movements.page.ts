@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonHeader,
@@ -9,16 +9,19 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonIcon,
+  ViewWillEnter,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { swapVerticalOutline } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { StockMovementService } from '../../core/services/stock-movement.service';
+import { PagedList } from '../../core/utils/paged-list';
 import { StockMovement, StockMovementStats } from '../../core/models/stock-movement.model';
 
 @Component({
   selector: 'app-stock-movements',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './stock-movements.page.html',
   styleUrls: ['./stock-movements.page.scss'],
   imports: [
@@ -34,22 +37,18 @@ import { StockMovement, StockMovementStats } from '../../core/models/stock-movem
     IonIcon,
   ],
 })
-export class StockMovementsPage implements OnInit {
+export class StockMovementsPage implements ViewWillEnter {
   private readonly stockMovementService = inject(StockMovementService);
 
-  readonly movements = signal<StockMovement[]>([]);
+  readonly list = new PagedList<StockMovement>((page, size) => this.stockMovementService.getForPharmacy(page, size));
   readonly stats = signal<StockMovementStats | null>(null);
-  readonly loading = signal(true);
-  readonly page = signal(0);
-  readonly hasMore = signal(true);
-  readonly pageSize = 20;
 
   constructor() {
     addIcons({ swapVerticalOutline });
   }
 
-  ngOnInit(): void {
-    this.load(true);
+  ionViewWillEnter(): void {
+    this.list.load(true);
 
     const end = new Date().toISOString().split('T')[0];
     const start = new Date();
@@ -58,31 +57,6 @@ export class StockMovementsPage implements OnInit {
       next: (stats) => this.stats.set(stats),
       error: () => {},
     });
-  }
-
-  load(reset: boolean, event?: CustomEvent): void {
-    if (reset) this.loading.set(true);
-    this.stockMovementService.getForPharmacy(this.page(), this.pageSize).subscribe({
-      next: (result) => {
-        this.movements.set(reset ? result.content : [...this.movements(), ...result.content]);
-        this.hasMore.set(this.page() + 1 < result.totalPages);
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-      error: () => {
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-    });
-  }
-
-  loadMore(event: CustomEvent): void {
-    if (!this.hasMore()) {
-      (event.target as HTMLIonInfiniteScrollElement).complete();
-      return;
-    }
-    this.page.update((p) => p + 1);
-    this.load(false, event);
   }
 
   quantityChange(movement: StockMovement): number {

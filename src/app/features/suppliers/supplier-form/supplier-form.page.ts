@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,15 +17,16 @@ import {
   IonSelectOption,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SupplierService } from '../../../core/services/supplier.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { Supplier, SupplierStatus } from '../../../core/models/supplier.model';
 
 @Component({
   selector: 'app-supplier-form',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './supplier-form.page.html',
   styleUrls: ['./supplier-form.page.scss'],
   imports: [
@@ -53,7 +54,7 @@ export class SupplierFormPage implements OnInit {
   private readonly supplierService = inject(SupplierService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -116,13 +117,8 @@ export class SupplierFormPage implements OnInit {
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('suppliers.saveFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('suppliers.saveFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

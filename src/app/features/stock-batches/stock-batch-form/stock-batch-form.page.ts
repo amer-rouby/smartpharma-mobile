@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,17 +17,18 @@ import {
   IonList,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StockBatchService } from '../../../core/services/stock-batch.service';
 import { ProductService } from '../../../core/services/product.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { StockBatch } from '../../../core/models/stock-batch.model';
 import { Product } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-stock-batch-form',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './stock-batch-form.page.html',
   styleUrls: ['./stock-batch-form.page.scss'],
   imports: [
@@ -56,7 +57,7 @@ export class StockBatchFormPage implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -141,13 +142,8 @@ export class StockBatchFormPage implements OnInit {
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('stockBatches.saveFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('stockBatches.saveFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

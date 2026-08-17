@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,16 +17,17 @@ import {
   IonSelectOption,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ExpenseService } from '../../../core/services/expense.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { EXPENSE_CATEGORIES, EXPENSE_PAYMENT_METHODS, ExpenseCategory } from '../../../core/models/expense.model';
 
 @Component({
   selector: 'app-expense-form',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './expense-form.page.html',
   styleUrls: ['./expense-form.page.scss'],
   imports: [
@@ -54,7 +55,7 @@ export class ExpenseFormPage {
   private readonly expenseService = inject(ExpenseService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -103,13 +104,8 @@ export class ExpenseFormPage {
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('expenses.saveFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('expenses.saveFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

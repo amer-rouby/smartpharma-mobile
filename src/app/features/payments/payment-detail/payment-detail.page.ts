@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -20,6 +20,7 @@ import { Payment } from '../../../core/models/payment.model';
 @Component({
   selector: 'app-payment-detail',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './payment-detail.page.html',
   styleUrls: ['./payment-detail.page.scss'],
   imports: [

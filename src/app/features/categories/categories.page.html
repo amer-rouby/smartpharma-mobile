@@ -6,24 +6,24 @@
     <ion-searchbar
       [placeholder]="'categories.searchPlaceholder' | translate"
       [debounce]="0"
-      (ionInput)="onSearchChange($any($event.target).value)"
+      (ionInput)="list.onSearchChange($any($event.target).value)"
     ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  @if (loading()) {
+  @if (list.loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
-  } @else if (categories().length === 0) {
+  } @else if (list.items().length === 0) {
     <div class="empty-state">
       <ion-icon name="pricetag-outline"></ion-icon>
       <p>{{ 'categories.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="category-list">
-      @for (category of categories(); track category.id) {
+      @for (category of list.items(); track category.id) {
         <ion-item>
           <div class="category-swatch" slot="start" [style.background]="category.color || '#667eea'"></div>
           <ion-label>
@@ -49,7 +49,7 @@
       }
     </ion-list>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+    <ion-infinite-scroll (ionInfinite)="list.loadMore($event)" [disabled]="!list.hasMore()">
       <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   }

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,11 +17,11 @@ import {
   IonToggle,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserManagementService } from '../../../core/services/user-management.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { StaffRole, StaffUser } from '../../../core/models/user-management.model';
 
 const ROLES: StaffRole[] = ['ADMIN', 'PHARMACIST', 'MANAGER', 'VIEWER'];
@@ -29,6 +29,7 @@ const ROLES: StaffRole[] = ['ADMIN', 'PHARMACIST', 'MANAGER', 'VIEWER'];
 @Component({
   selector: 'app-user-form',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './user-form.page.html',
   styleUrls: ['./user-form.page.scss'],
   imports: [
@@ -57,7 +58,7 @@ export class UserFormPage implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -123,13 +124,8 @@ export class UserFormPage implements OnInit {
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('users.saveFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('users.saveFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

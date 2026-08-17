@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Capacitor } from '@capacitor/core';
@@ -20,7 +20,6 @@ import {
   IonSelectOption,
   IonInput,
   IonFooter,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -38,6 +37,7 @@ import { ProductService } from '../../core/services/product.service';
 import { SaleService } from '../../core/services/sale.service';
 import { PharmacySettingsService } from '../../core/services/pharmacy-settings.service';
 import { PrescriptionService } from '../../core/services/prescription.service';
+import { ToastService } from '../../core/services/toast.service';
 import { Product } from '../../core/models/product.model';
 import { ALL_PAYMENT_METHODS, PAYMENT_METHOD_KEYS } from '../../core/models/sale.model';
 
@@ -49,6 +49,7 @@ interface CartLine {
 @Component({
   selector: 'app-pos',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pos.page.html',
   styleUrls: ['./pos.page.scss'],
   imports: [
@@ -78,7 +79,7 @@ export class PosPage implements OnInit {
   private readonly saleService = inject(SaleService);
   private readonly pharmacySettingsService = inject(PharmacySettingsService);
   private readonly prescriptionService = inject(PrescriptionService);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly searchTerm = signal('');
@@ -156,7 +157,7 @@ export class PosPage implements OnInit {
 
   addToCart(product: Product): void {
     if (product.totalStock <= 0) {
-      this.showToast(this.translate.instant('pos.outOfStockProduct', { name: product.name }));
+      this.toastService.show(this.translate.instant('pos.outOfStockProduct', { name: product.name }));
       return;
     }
     const existing = this.cart().find((line) => line.product.id === product.id);
@@ -174,7 +175,7 @@ export class PosPage implements OnInit {
       lines.map((line) => {
         if (line.product.id !== productId) return line;
         if (line.quantity >= line.product.totalStock) {
-          this.showToast(this.translate.instant('pos.maxQuantity'));
+          this.toastService.show(this.translate.instant('pos.maxQuantity'));
           return line;
         }
         return { ...line, quantity: line.quantity + 1 };
@@ -196,14 +197,14 @@ export class PosPage implements OnInit {
 
   async onScanBarcode(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      this.showToast(this.translate.instant('pos.scanUnavailable'));
+      this.toastService.show(this.translate.instant('pos.scanUnavailable'));
       return;
     }
     try {
       const { BarcodeScanner } = await import('@capacitor-mlkit/barcode-scanning');
       const { camera } = await BarcodeScanner.requestPermissions();
       if (camera !== 'granted' && camera !== 'limited') {
-        this.showToast(this.translate.instant('pos.cameraPermission'));
+        this.toastService.show(this.translate.instant('pos.cameraPermission'));
         return;
       }
       const { barcodes } = await BarcodeScanner.scan();
@@ -215,12 +216,12 @@ export class PosPage implements OnInit {
           if (product) {
             this.addToCart(product);
           } else {
-            this.showToast(this.translate.instant('pos.noProductForBarcode'));
+            this.toastService.show(this.translate.instant('pos.noProductForBarcode'));
           }
         },
       });
     } catch {
-      this.showToast(this.translate.instant('pos.scanError'));
+      this.toastService.show(this.translate.instant('pos.scanError'));
     }
   }
 
@@ -245,7 +246,7 @@ export class PosPage implements OnInit {
         },
         error: () => {
           this.prescriptionUploading.set(false);
-          this.showToast(this.translate.instant('pos.prescriptionUploadFailed'));
+          this.toastService.show(this.translate.instant('pos.prescriptionUploadFailed'));
         },
       });
     } catch {
@@ -259,11 +260,11 @@ export class PosPage implements OnInit {
 
   onSubmit(): void {
     if (this.cart().length === 0) {
-      this.showToast(this.translate.instant('pos.cartEmpty'));
+      this.toastService.show(this.translate.instant('pos.cartEmpty'));
       return;
     }
     if (this.hasPrescriptionRequiredItem() && !this.prescriptionImageUrl()) {
-      this.showToast(this.translate.instant('pos.prescriptionRequired'));
+      this.toastService.show(this.translate.instant('pos.prescriptionRequired'));
       return;
     }
 
@@ -284,20 +285,15 @@ export class PosPage implements OnInit {
       .subscribe({
         next: (sale) => {
           this.submitting.set(false);
-          this.showToast(this.translate.instant('pos.saleSuccess', { invoice: sale.invoiceNumber }));
+          this.toastService.show(this.translate.instant('pos.saleSuccess', { invoice: sale.invoiceNumber }));
           this.cart.set([]);
           this.discount.set(0);
           this.prescriptionImageUrl.set(null);
         },
         error: (err) => {
           this.submitting.set(false);
-          this.showToast(err?.error?.message || this.translate.instant('pos.saleFailed'));
+          this.toastService.show(err?.error?.message || this.translate.instant('pos.saleFailed'));
         },
       });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

@@ -5,18 +5,18 @@
 </ion-header>
 
 <ion-content>
-  @if (loading()) {
+  @if (list.loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
-  } @else if (batches().length === 0) {
+  } @else if (list.items().length === 0) {
     <div class="empty-state">
       <ion-icon name="cube-outline"></ion-icon>
       <p>{{ 'stockBatches.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="batch-list">
-      @for (batch of batches(); track batch.id) {
+      @for (batch of list.items(); track batch.id) {
         <ion-item button (click)="openBatch(batch)" detail="true">
           <ion-label>
             <h2>{{ batch.productName }}</h2>
@@ -34,7 +34,7 @@
       }
     </ion-list>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+    <ion-infinite-scroll (ionInfinite)="list.loadMore($event)" [disabled]="!list.hasMore()">
       <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   }

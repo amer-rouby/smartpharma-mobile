@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,13 +19,13 @@ import {
   IonButton,
   IonSpinner,
   IonIcon,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { refreshOutline } from 'ionicons/icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../../core/services/product.service';
 import { CategoryService } from '../../../core/services/category.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { Category } from '../../../core/models/category.model';
 
 const UNIT_TYPES = ['BOX', 'STRIP', 'TABLET', 'BOTTLE', 'TUBE', 'PACKET'] as const;
@@ -33,6 +33,7 @@ const UNIT_TYPES = ['BOX', 'STRIP', 'TABLET', 'BOTTLE', 'TUBE', 'PACKET'] as con
 @Component({
   selector: 'app-product-form',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './product-form.page.html',
   styleUrls: ['./product-form.page.scss'],
   imports: [
@@ -63,7 +64,7 @@ export class ProductFormPage implements OnInit {
   private readonly categoryService = inject(CategoryService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly saving = signal(false);
@@ -142,7 +143,7 @@ export class ProductFormPage implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.showToast(this.translate.instant('products.loadFailed'));
+        this.toastService.show(this.translate.instant('products.loadFailed'));
         this.router.navigate(['/tabs/products']);
       },
     });
@@ -163,7 +164,7 @@ export class ProductFormPage implements OnInit {
     const value = this.form.value;
 
     if (!this.isEdit && value.initialStock && value.initialStock > 0 && !value.expiryDate) {
-      this.showToast(this.translate.instant('products.expiryDateRequiredWithStock'));
+      this.toastService.show(this.translate.instant('products.expiryDateRequiredWithStock'));
       return;
     }
 
@@ -204,13 +205,8 @@ export class ProductFormPage implements OnInit {
       },
       error: (err) => {
         this.saving.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('products.saveFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('products.saveFailed'));
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

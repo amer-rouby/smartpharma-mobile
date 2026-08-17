@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -14,16 +14,19 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonIcon,
+  ViewWillEnter,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { receiptOutline, cartOutline } from 'ionicons/icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { PurchaseOrderService } from '../../core/services/purchase-order.service';
+import { PagedList } from '../../core/utils/paged-list';
 import { PurchaseOrder, STATUS_COLORS, STATUS_LABEL_KEYS } from '../../core/models/purchase-order.model';
 
 @Component({
   selector: 'app-purchases',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './purchases.page.html',
   styleUrls: ['./purchases.page.scss'],
   imports: [
@@ -43,14 +46,11 @@ import { PurchaseOrder, STATUS_COLORS, STATUS_LABEL_KEYS } from '../../core/mode
     TranslateModule,
   ],
 })
-export class PurchasesPage implements OnInit {
+export class PurchasesPage implements ViewWillEnter {
   private readonly purchaseOrderService = inject(PurchaseOrderService);
   private readonly router = inject(Router);
 
-  readonly orders = signal<PurchaseOrder[]>([]);
-  readonly loading = signal(true);
-  readonly page = signal(0);
-  readonly hasMore = signal(true);
+  readonly list = new PagedList<PurchaseOrder>((page, size) => this.purchaseOrderService.getOrders(page, size), 15);
   readonly statusLabelKeys = STATUS_LABEL_KEYS;
   readonly statusColors = STATUS_COLORS;
 
@@ -58,33 +58,8 @@ export class PurchasesPage implements OnInit {
     addIcons({ receiptOutline, cartOutline });
   }
 
-  ngOnInit(): void {
-    this.load(true);
-  }
-
-  load(reset: boolean, event?: CustomEvent): void {
-    if (reset) this.loading.set(true);
-    this.purchaseOrderService.getOrders(this.page(), 15).subscribe({
-      next: (result) => {
-        this.orders.set(reset ? result.content : [...this.orders(), ...result.content]);
-        this.hasMore.set(this.page() + 1 < result.totalPages);
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-      error: () => {
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-    });
-  }
-
-  loadMore(event: CustomEvent): void {
-    if (!this.hasMore()) {
-      (event.target as HTMLIonInfiniteScrollElement).complete();
-      return;
-    }
-    this.page.update((p) => p + 1);
-    this.load(false, event);
+  ionViewWillEnter(): void {
+    this.list.load(true);
   }
 
   openOrder(order: PurchaseOrder): void {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -48,6 +48,7 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-more',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './more.page.html',
   styleUrls: ['./more.page.scss'],
   imports: [

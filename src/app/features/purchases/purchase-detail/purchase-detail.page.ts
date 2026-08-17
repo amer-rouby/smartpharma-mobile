@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -21,6 +21,7 @@ import { PurchaseOrder, STATUS_COLORS, STATUS_LABEL_KEYS } from '../../../core/m
 @Component({
   selector: 'app-purchase-detail',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './purchase-detail.page.html',
   styleUrls: ['./purchase-detail.page.scss'],
   imports: [

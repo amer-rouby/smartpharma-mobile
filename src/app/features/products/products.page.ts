@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,18 +22,21 @@ import {
   IonBadge,
   IonButton,
   AlertController,
-  ToastController,
+  ViewWillEnter,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { scanOutline, cubeOutline, addOutline, createOutline, trashOutline } from 'ionicons/icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../core/services/product.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ToastService } from '../../core/services/toast.service';
+import { PagedList } from '../../core/utils/paged-list';
 import { Product } from '../../core/models/product.model';
 
 @Component({
   selector: 'app-products',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   imports: [
@@ -59,68 +62,29 @@ import { Product } from '../../core/models/product.model';
     IonButton,
   ],
 })
-export class ProductsPage implements OnInit {
+export class ProductsPage implements ViewWillEnter {
   private readonly productService = inject(ProductService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
-  readonly products = signal<Product[]>([]);
-  readonly loading = signal(true);
-  readonly searchTerm = signal('');
-  readonly page = signal(0);
-  readonly hasMore = signal(true);
-  readonly pageSize = 20;
+  readonly list = new PagedList<Product>((page, size, search) =>
+    this.productService.getProductsPaged(page, size, search)
+  );
   readonly canManage = this.authService.hasRole('ADMIN', 'PHARMACIST');
   readonly canDelete = this.authService.hasRole('ADMIN');
-
-  private searchDebounceTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
     addIcons({ scanOutline, cubeOutline, addOutline, createOutline, trashOutline });
   }
 
-  ngOnInit(): void {
-    this.loadProducts(true);
-  }
-
-  onSearchChange(value: string): void {
-    this.searchTerm.set(value);
-    clearTimeout(this.searchDebounceTimer);
-    this.searchDebounceTimer = setTimeout(() => {
-      this.page.set(0);
-      this.hasMore.set(true);
-      this.loadProducts(true);
-    }, 400);
-  }
-
-  loadProducts(reset: boolean, event?: CustomEvent): void {
-    if (reset) {
-      this.loading.set(true);
-    }
-    this.productService.getProductsPaged(this.page(), this.pageSize, this.searchTerm()).subscribe({
-      next: (result) => {
-        this.products.set(reset ? result.content : [...this.products(), ...result.content]);
-        this.hasMore.set(this.page() + 1 < result.totalPages);
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-      error: () => {
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-    });
-  }
-
-  loadMore(event: CustomEvent): void {
-    if (!this.hasMore()) {
-      (event.target as HTMLIonInfiniteScrollElement).complete();
-      return;
-    }
-    this.page.update((p) => p + 1);
-    this.loadProducts(false, event);
+  // Ionic keeps this page's component alive in the tab stack, so returning to
+  // it after adding/editing a product (a different route) doesn't re-run
+  // ngOnInit - this fires on every entry, including the first, and reloads.
+  ionViewWillEnter(): void {
+    this.list.load(true);
   }
 
   stockColor(product: Product): string {
@@ -131,7 +95,7 @@ export class ProductsPage implements OnInit {
 
   async onScanBarcode(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      this.showToast(this.translate.instant('products.scanUnavailable'));
+      this.toastService.show(this.translate.instant('products.scanUnavailable'));
       return;
     }
 
@@ -139,7 +103,7 @@ export class ProductsPage implements OnInit {
       const { BarcodeScanner } = await import('@capacitor-mlkit/barcode-scanning');
       const { camera } = await BarcodeScanner.requestPermissions();
       if (camera !== 'granted' && camera !== 'limited') {
-        this.showToast(this.translate.instant('products.cameraPermission'));
+        this.toastService.show(this.translate.instant('products.cameraPermission'));
         return;
       }
 
@@ -152,15 +116,15 @@ export class ProductsPage implements OnInit {
       this.productService.getByBarcode(code).subscribe({
         next: (product) => {
           if (product) {
-            this.searchTerm.set(product.name);
-            this.products.set([product]);
+            this.list.searchTerm.set(product.name);
+            this.list.items.set([product]);
           } else {
-            this.showToast(this.translate.instant('products.noProductForBarcode'));
+            this.toastService.show(this.translate.instant('products.noProductForBarcode'));
           }
         },
       });
     } catch (error) {
-      this.showToast(this.translate.instant('products.scanError'));
+      this.toastService.show(this.translate.instant('products.scanError'));
     }
   }
 
@@ -184,19 +148,14 @@ export class ProductsPage implements OnInit {
           handler: () => {
             this.productService.deleteProduct(product.id).subscribe({
               next: () => {
-                this.products.update((list) => list.filter((p) => p.id !== product.id));
+                this.list.items.update((items) => items.filter((p) => p.id !== product.id));
               },
-              error: () => this.showToast(this.translate.instant('products.deleteFailed')),
+              error: () => this.toastService.show(this.translate.instant('products.deleteFailed')),
             });
           },
         },
       ],
     });
     await alert.present();
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

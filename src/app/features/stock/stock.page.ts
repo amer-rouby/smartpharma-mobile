@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonHeader,
@@ -23,6 +23,7 @@ import { StockAlert } from '../../core/models/stock-alert.model';
 @Component({
   selector: 'app-stock',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './stock.page.html',
   styleUrls: ['./stock.page.scss'],
   imports: [

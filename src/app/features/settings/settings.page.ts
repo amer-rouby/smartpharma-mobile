@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -15,15 +15,16 @@ import {
   IonInput,
   IonButton,
   IonSpinner,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NotificationSettingsService } from '../../core/services/notification-settings.service';
+import { ToastService } from '../../core/services/toast.service';
 import { NotificationSettings } from '../../core/models/notification-settings.model';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   imports: [
@@ -47,7 +48,7 @@ import { NotificationSettings } from '../../core/models/notification-settings.mo
 })
 export class SettingsPage implements OnInit {
   private readonly notificationSettingsService = inject(NotificationSettingsService);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly settings = signal<NotificationSettings | null>(null);
@@ -73,17 +74,12 @@ export class SettingsPage implements OnInit {
       next: (updated) => {
         this.settings.set(updated);
         this.saving.set(false);
-        this.showToast(this.translate.instant('settings.saveSuccess'));
+        this.toastService.show(this.translate.instant('settings.saveSuccess'), 2000);
       },
       error: () => {
         this.saving.set(false);
-        this.showToast(this.translate.instant('settings.saveFailed'));
+        this.toastService.show(this.translate.instant('settings.saveFailed'), 2000);
       },
     });
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2000, position: 'bottom' });
-    await toast.present();
   }
 }

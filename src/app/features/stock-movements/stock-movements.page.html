@@ -22,18 +22,18 @@
     </div>
   }
 
-  @if (loading()) {
+  @if (list.loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
-  } @else if (movements().length === 0) {
+  } @else if (list.items().length === 0) {
     <div class="empty-state">
       <ion-icon name="swap-vertical-outline"></ion-icon>
       <p>{{ 'stockMovements.emptyState' | translate }}</p>
     </div>
   } @else {
     <div class="movement-list">
-      @for (movement of movements(); track movement.id) {
+      @for (movement of list.items(); track movement.id) {
         <div class="movement-row">
           <div class="movement-type" [attr.data-color]="typeColor(movement.movementType)">
             {{ ('stockMovements.type.' + movement.movementType) | translate }}
@@ -49,7 +49,7 @@
       }
     </div>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+    <ion-infinite-scroll (ionInfinite)="list.loadMore($event)" [disabled]="!list.hasMore()">
       <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   }

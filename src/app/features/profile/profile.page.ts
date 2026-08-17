@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,7 +19,6 @@ import {
   IonIcon,
   IonSpinner,
   AlertController,
-  ToastController,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -32,11 +31,13 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ProfileService } from '../../core/services/profile.service';
+import { ToastService } from '../../core/services/toast.service';
 import { Profile } from '../../core/models/profile.model';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   imports: [
@@ -64,7 +65,7 @@ export class ProfilePage implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
   readonly loading = signal(true);
@@ -121,7 +122,7 @@ export class ProfilePage implements OnInit {
 
   async onChangePhoto(): Promise<void> {
     if (!Capacitor.isNativePlatform()) {
-      this.showToast(this.translate.instant('profile.photoUnavailable'));
+      this.toastService.show(this.translate.instant('profile.photoUnavailable'));
       return;
     }
 
@@ -142,11 +143,11 @@ export class ProfilePage implements OnInit {
         next: (result) => {
           this.profile.update((p) => (p ? { ...p, profileImageUrl: result.url } : p));
           this.uploadingPhoto.set(false);
-          this.showToast(this.translate.instant('profile.photoUpdated'));
+          this.toastService.show(this.translate.instant('profile.photoUpdated'));
         },
         error: () => {
           this.uploadingPhoto.set(false);
-          this.showToast(this.translate.instant('profile.photoUploadFailed'));
+          this.toastService.show(this.translate.instant('profile.photoUploadFailed'));
         },
       });
     } catch {
@@ -179,11 +180,11 @@ export class ProfilePage implements OnInit {
       next: (profile) => {
         this.profile.set(profile);
         this.saving.set(false);
-        this.showToast(this.translate.instant('profile.updateSuccess'));
+        this.toastService.show(this.translate.instant('profile.updateSuccess'));
       },
       error: () => {
         this.saving.set(false);
-        this.showToast(this.translate.instant('profile.updateFailed'));
+        this.toastService.show(this.translate.instant('profile.updateFailed'));
       },
     });
   }
@@ -202,7 +203,7 @@ export class ProfilePage implements OnInit {
       return;
     }
     if (value.newPassword !== value.confirmPassword) {
-      this.showToast(this.translate.instant('profile.passwordMismatch'));
+      this.toastService.show(this.translate.instant('profile.passwordMismatch'));
       return;
     }
 
@@ -212,11 +213,11 @@ export class ProfilePage implements OnInit {
         this.changingPassword.set(false);
         this.passwordForm.reset();
         this.showPasswordForm.set(false);
-        this.showToast(this.translate.instant('profile.passwordChanged'));
+        this.toastService.show(this.translate.instant('profile.passwordChanged'));
       },
       error: (err) => {
         this.changingPassword.set(false);
-        this.showToast(err?.error?.message || this.translate.instant('profile.passwordChangeFailed'));
+        this.toastService.show(err?.error?.message || this.translate.instant('profile.passwordChangeFailed'));
       },
     });
   }
@@ -239,10 +240,5 @@ export class ProfilePage implements OnInit {
       ],
     });
     await alert.present();
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }

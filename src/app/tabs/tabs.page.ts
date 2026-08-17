@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { homeOutline, cartOutline, cubeOutline, alertCircleOutline, menuOutline } from 'ionicons/icons';
@@ -10,6 +10,7 @@ import { NotificationService } from '../core/services/notification.service';
 
 @Component({
   selector: 'app-tabs',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge, TranslateModule],

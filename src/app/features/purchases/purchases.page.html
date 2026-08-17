@@ -5,18 +5,18 @@
 </ion-header>
 
 <ion-content>
-  @if (loading()) {
+  @if (list.loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
-  } @else if (orders().length === 0) {
+  } @else if (list.items().length === 0) {
     <div class="empty-state">
       <ion-icon name="receipt-outline"></ion-icon>
       <p>{{ 'purchases.emptyState' | translate }}</p>
     </div>
   } @else {
     <ion-list class="order-list">
-      @for (order of orders(); track order.id) {
+      @for (order of list.items(); track order.id) {
         <ion-item button detail="true" (click)="openOrder(order)">
           <div class="order-icon" slot="start">
             <ion-icon name="cart-outline"></ion-icon>
@@ -33,7 +33,7 @@
       }
     </ion-list>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+    <ion-infinite-scroll (ionInfinite)="list.loadMore($event)" [disabled]="!list.hasMore()">
       <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   }

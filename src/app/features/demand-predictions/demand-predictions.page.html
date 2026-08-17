@@ -23,18 +23,18 @@
     </div>
   }
 
-  @if (loading()) {
+  @if (list.loading()) {
     <div class="loading-state">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
-  } @else if (predictions().length === 0) {
+  } @else if (list.items().length === 0) {
     <div class="empty-state">
       <ion-icon name="analytics-outline"></ion-icon>
       <p>{{ 'demandPrediction.emptyState' | translate }}</p>
     </div>
   } @else {
     <div class="prediction-list">
-      @for (prediction of predictions(); track prediction.predictionId) {
+      @for (prediction of list.items(); track prediction.predictionId) {
         <div class="prediction-card">
           <div class="prediction-header">
             <span class="product-name">{{ prediction.productName }}</span>
@@ -68,7 +68,7 @@
       }
     </div>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="!hasMore()">
+    <ion-infinite-scroll (ionInfinite)="list.loadMore($event)" [disabled]="!list.hasMore()">
       <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   }

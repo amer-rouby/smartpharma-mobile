@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -19,18 +19,21 @@ import {
   IonIcon,
   IonButton,
   AlertController,
-  ToastController,
+  ViewWillEnter,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addOutline, pricetagOutline, trashOutline, createOutline } from 'ionicons/icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../../core/services/category.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ToastService } from '../../core/services/toast.service';
+import { PagedList } from '../../core/utils/paged-list';
 import { Category } from '../../core/models/category.model';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './categories.page.html',
   styleUrls: ['./categories.page.scss'],
   imports: [
@@ -54,66 +57,26 @@ import { Category } from '../../core/models/category.model';
     IonButton,
   ],
 })
-export class CategoriesPage implements OnInit {
+export class CategoriesPage implements ViewWillEnter {
   private readonly categoryService = inject(CategoryService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly alertController = inject(AlertController);
-  private readonly toastController = inject(ToastController);
+  private readonly toastService = inject(ToastService);
   private readonly translate = inject(TranslateService);
 
-  readonly categories = signal<Category[]>([]);
-  readonly loading = signal(true);
-  readonly searchTerm = signal('');
-  readonly page = signal(0);
-  readonly hasMore = signal(true);
-  readonly pageSize = 20;
+  readonly list = new PagedList<Category>((page, size, search) =>
+    this.categoryService.getPage(page, size, search)
+  );
   readonly canManage = this.authService.hasRole('ADMIN', 'PHARMACIST');
   readonly canDelete = this.authService.hasRole('ADMIN');
-
-  private searchDebounceTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
     addIcons({ addOutline, pricetagOutline, trashOutline, createOutline });
   }
 
-  ngOnInit(): void {
-    this.load(true);
-  }
-
-  onSearchChange(value: string): void {
-    this.searchTerm.set(value);
-    clearTimeout(this.searchDebounceTimer);
-    this.searchDebounceTimer = setTimeout(() => {
-      this.page.set(0);
-      this.hasMore.set(true);
-      this.load(true);
-    }, 350);
-  }
-
-  load(reset: boolean, event?: CustomEvent): void {
-    if (reset) this.loading.set(true);
-    this.categoryService.getPage(this.page(), this.pageSize, this.searchTerm()).subscribe({
-      next: (result) => {
-        this.categories.set(reset ? result.content : [...this.categories(), ...result.content]);
-        this.hasMore.set(this.page() + 1 < result.totalPages);
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-      error: () => {
-        this.loading.set(false);
-        (event?.target as HTMLIonInfiniteScrollElement | undefined)?.complete();
-      },
-    });
-  }
-
-  loadMore(event: CustomEvent): void {
-    if (!this.hasMore()) {
-      (event.target as HTMLIonInfiniteScrollElement).complete();
-      return;
-    }
-    this.page.update((p) => p + 1);
-    this.load(false, event);
+  ionViewWillEnter(): void {
+    this.list.load(true);
   }
 
   addCategory(): void {
@@ -136,19 +99,14 @@ export class CategoriesPage implements OnInit {
           handler: () => {
             this.categoryService.delete(category.id).subscribe({
               next: () => {
-                this.categories.update((list) => list.filter((c) => c.id !== category.id));
+                this.list.items.update((items) => items.filter((c) => c.id !== category.id));
               },
-              error: () => this.showToast(this.translate.instant('categories.deleteFailed')),
+              error: () => this.toastService.show(this.translate.instant('categories.deleteFailed')),
             });
           },
         },
       ],
     });
     await alert.present();
-  }
-
-  private async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({ message, duration: 2500, position: 'bottom' });
-    await toast.present();
   }
 }
